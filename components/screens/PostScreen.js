@@ -1,14 +1,21 @@
-import React from 'react';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faUserCircle,
   faThumbsUp,
   faThumbsDown,
   faBookmark,
-} from '@fortawesome/free-regular-svg-icons';
-import {faShare} from '@fortawesome/free-solid-svg-icons';
-import {faSellcast} from '@fortawesome/free-brands-svg-icons';
+} from "@fortawesome/free-regular-svg-icons";
+import { faShare, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
 export default function PostScreen() {
   return (
@@ -57,42 +64,63 @@ export default function PostScreen() {
             </Text>
           </View>
           <View style={styles.postFooter}>
-            <FontAwesomeIcon icon={faThumbsUp} />
-            <FontAwesomeIcon icon={faThumbsDown} />
-            <FontAwesomeIcon icon={faBookmark} />
-            <FontAwesomeIcon icon={faShare} />
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsUp} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faBookmark} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faShare} />
+            </TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.commentButton}>
+            <View style={styles.commentContainer}>
+              <View style={styles.commentPlus}>
+                <FontAwesomeIcon icon={faPlus} color="#FFFFFF" size={20} />
+              </View>
+              <View style={styles.commentButonTextContainer}>
+                <Text style={styles.commentButonText}>Comment</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
   );
 }
 
-const screenHeight = Math.round(Dimensions.get('window').height);
+const screenHeight = Math.round(Dimensions.get("window").height);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#E2E8F0',
+    backgroundColor: "#E2E8F0",
     height: screenHeight,
   },
   header: {
     height: 80,
     paddingTop: 30,
-    shadowColor: '#276749',
-    shadowOffset: {width: 0, height: 5},
+    shadowColor: "#276749",
+    shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.7,
-    alignItems: 'center',
-    backgroundColor: '#2F855A',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    backgroundColor: "#2F855A",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   headerprofilePhotos: {
     marginLeft: 10,
   },
   headerText: {
     fontSize: 30,
-    fontWeight: 'bold',
-    color: '#ffffff',
+    fontWeight: "bold",
+    color: "#ffffff",
     paddingTop: 5,
   },
   headerIcon: {
@@ -100,36 +128,36 @@ const styles = StyleSheet.create({
   },
   post: {
     height: screenHeight,
-    backgroundColor: '#E2E8F0',
+    backgroundColor: "#E2E8F0",
     borderRadius: 10,
-    flexDirection: 'column',
+    flexDirection: "column",
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
   },
   postHeader: {
-    backgroundColor: '#E2E8F0',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: "#E2E8F0",
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 20,
   },
   postHeaderLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginLeft: 10,
   },
   postUsername: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
     marginLeft: 5,
   },
   postHeaderRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginRight: 10,
   },
   postTime: {
-    fontWeight: '400',
+    fontWeight: "400",
   },
   postBody: {
     marginTop: 15,
@@ -138,8 +166,8 @@ const styles = StyleSheet.create({
   },
   postTitle: {
     marginTop: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    textAlign: "center",
+    fontWeight: "bold",
     fontSize: 20,
   },
   postParagraph: {
@@ -147,7 +175,43 @@ const styles = StyleSheet.create({
   },
   postFooter: {
     marginTop: 30,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  commentButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    marginTop: 20,
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: "#2F855A",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.7,
+  },
+  commentContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  commentPlus: {
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#FFFFFF",
+    padding: 3,
+  },
+  commentButonTextContainer: {
+    textAlign: "center",
+    justifyContent: "center",
+  },
+  commentButonText: {
+    textAlign: "center",
+    justifyContent: "center",
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    marginLeft: 10,
   },
 });
