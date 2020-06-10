@@ -25,13 +25,15 @@ export default function App() {
 	        <Scene key="profileScreen"
 	          component={ProfileScreen}
 	          animation='fade'
-						hideNavBar={true}
+				hideNavBar={true}
+				
 	        />
           <Scene key="homeScreen"
 	          component={HomeScreen}
 	          animation='fade'
 				hideNavBar={true}
 				initial={true}
+				
 	        />
 			<Scene key="loginScreen"
 	          component={LoginScreen}

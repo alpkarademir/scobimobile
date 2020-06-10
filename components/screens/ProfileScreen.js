@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { Actions } from "react-native-router-flux";
 import {
   faUserCircle,
   faThumbsUp,
@@ -16,11 +17,23 @@ import {
   faBell,
   faBookmark
 } from "@fortawesome/free-regular-svg-icons";
-import { faShare, faEye, faSearch, faEdit, faGripLines } from "@fortawesome/free-solid-svg-icons";
+import { faShare, faCheck, faEdit, faGripLines } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 import ProfilePostScreen from './ProfilePostScreen';
+import profileScobScreen from './ProfileScobScreen';
+import ProfileScobScreen from "./ProfileScobScreen";
 
-export default function PostScreen() {
+export default function ProfileScreen() {
+  const routeToProfile = () => {
+    Actions.profileScreen();
+  };
+  const routeToScob = () => {
+    Actions.profileScobScreen();
+  };
+  const routeToHome = () => {
+    Actions.homeScreen();
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -31,12 +44,14 @@ export default function PostScreen() {
           size={40}
         />
         <Text style={styles.headerText}>Username</Text>
+        <TouchableOpacity onPress={routeToHome}>
         <FontAwesomeIcon
           style={styles.headerIcon}
           color="#ffffff"
           icon={faSellcast}
           size={40}
         />
+        </TouchableOpacity>
       </View>
         <View style={styles.postCounterContainer}>
           <View style={styles.counters}>
@@ -57,18 +72,28 @@ export default function PostScreen() {
           </TouchableOpacity>
         </View>
         <View style={styles.bracket}>
+        <TouchableOpacity
+            style={styles.loginButton}>
+            <FontAwesomeIcon
+            icon={faCheck}
+            size={15}
+            color= "#ffffff"
+            />
+            <Text style={styles.loginText}>Follow</Text>
+            </TouchableOpacity>
         </View>
       <View style={{marginBottom:10}}>
         <ProfilePostScreen></ProfilePostScreen>
       </View>
 
-      <View style={styles.footer}>
+
+      <View style={styles.footer} onPress={routeToProfile}>
         <TouchableOpacity>
           <View style={styles.addPostContainer}>
             <FontAwesomeIcon color="#000000" icon={faGripLines} size={30} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={routeToScob}>
           <View style={styles.addScobContainer}>
             <FontAwesomeIcon color="#000000" icon={faEdit} size={30} />
           </View>
@@ -180,7 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   footer: {
-    height: 60,
+    height: 50,
     alignItems: "center",
     backgroundColor: "#CBD5E0",
     flexDirection: "row",
@@ -206,10 +231,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   bracket: {
-    height: 10,
-    backgroundColor: "#68d391",
+    height: 30,
+    backgroundColor: "#E2E8F0",
     borderRadius: 5,
     flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
@@ -217,5 +244,28 @@ const styles = StyleSheet.create({
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.9,
+  },
+  loginButton: {
+    height: 30,
+    width: 100,
+    backgroundColor: "#2F855A",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#C6F6D5",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+    flexDirection: 'row',
+  },
+  loginText: {
+    fontSize: 15,
+    fontWeight: "300",
+    color: "#ffffff",
+    marginLeft: 10,
   },
 });
