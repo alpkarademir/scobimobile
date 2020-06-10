@@ -21,7 +21,7 @@ import { faShare, faCheck, faEdit, faGripLines } from "@fortawesome/free-solid-s
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 import ProfilePostScreen from './ProfilePostScreen';
 import profileScobScreen from './ProfileScobScreen';
-import ProfileScobScreen from "./ProfileScobScreen";
+import profileBookmarkScreen from './ProfileBookmarkScreen';
 
 export default function ProfileScreen() {
   const routeToProfile = () => {
@@ -33,6 +33,9 @@ export default function ProfileScreen() {
   const routeToHome = () => {
     Actions.homeScreen();
   }
+  const routeToBookmark = () => {
+    Actions.profileBookmarkScreen();
+  };
 
   return (
     <View style={styles.container}>
@@ -98,7 +101,7 @@ export default function ProfileScreen() {
             <FontAwesomeIcon color="#000000" icon={faEdit} size={30} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={routeToBookmark}>
           <View style={styles.addScobContainer}>
             <FontAwesomeIcon color="#000000" icon={faBookmark} size={30} />
           </View>

@@ -11,6 +11,7 @@ import CommentScreen from './components/screens/CommentScreen';
 import ContactScreen from './components/screens/ContactScreen';
 import ProfilePostScreen from './components/screens/ProfilePostScreen';
 import ProfileScobScreen from './components/screens/ProfileScobScreen';
+import ProfileBookmarkScreen from './components/screens/ProfileBookmarkScreen';
 
 export default function App() {
   return (
@@ -32,14 +33,14 @@ export default function App() {
 	          component={HomeScreen}
 	          animation='fade'
 				hideNavBar={true}
-				initial={true}
+				
 				
 	        />
 			<Scene key="loginScreen"
 	          component={LoginScreen}
 	          animation='fade'
             hideNavBar={true}
-            
+            initial={true}
 	        />
 			<Scene key="signupScreen"
 				component={SignUpScreen}
@@ -70,6 +71,12 @@ export default function App() {
 	        />
 			<Scene key="profileScobScreen"
 				component={ProfileScobScreen}
+				animation='fade'
+				hideNavBar={true}
+				
+	        />
+			<Scene key="profileBookmarkScreen"
+				component={ProfileBookmarkScreen}
 				animation='fade'
 				hideNavBar={true}
 				

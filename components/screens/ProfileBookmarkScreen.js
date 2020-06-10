@@ -54,9 +54,10 @@ export default function PostScreen() {
               <FontAwesomeIcon icon={faThumbsDown} />
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faBookmark} />
-            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+                <FontAwesomeIcon icon={faEye} />
+                <Text style={{ marginLeft: 5 }}>200k+</Text>
+              </TouchableOpacity>
 
             <TouchableOpacity>
               <FontAwesomeIcon icon={faShare} />
@@ -98,9 +99,10 @@ export default function PostScreen() {
               <FontAwesomeIcon icon={faThumbsDown} />
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faBookmark} />
-            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+                <FontAwesomeIcon icon={faEye} />
+                <Text style={{ marginLeft: 5 }}>200k+</Text>
+              </TouchableOpacity>
 
             <TouchableOpacity>
               <FontAwesomeIcon icon={faShare} />
@@ -142,9 +144,10 @@ export default function PostScreen() {
               <FontAwesomeIcon icon={faThumbsDown} />
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faBookmark} />
-            </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+                <FontAwesomeIcon icon={faEye} />
+                <Text style={{ marginLeft: 5 }}>200k+</Text>
+              </TouchableOpacity>
 
             <TouchableOpacity>
               <FontAwesomeIcon icon={faShare} />
