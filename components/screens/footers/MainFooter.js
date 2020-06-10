@@ -16,19 +16,16 @@ export default function PostScreen() {
       <TouchableOpacity>
         <View style={styles.addPostContainer}>
           <FontAwesomeIcon color="#000000" icon={faSearch} size={30} />
-          <Text style={styles.addPostText}>Search</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity>
         <View style={styles.addScobContainer}>
           <FontAwesomeIcon color="#000000" icon={faPlusSquare} size={30} />
-          <Text style={styles.addScobtext}>Add Scob</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity>
         <View style={styles.addScobContainer}>
           <FontAwesomeIcon color="#000000" icon={faBell} size={30} />
-          <Text style={styles.addScobtext}>Notification</Text>
         </View>
       </TouchableOpacity>
     </View>

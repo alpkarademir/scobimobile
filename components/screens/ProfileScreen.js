@@ -14,9 +14,11 @@ import {
   faThumbsDown,
   faPlusSquare,
   faBell,
+  faBookmark
 } from "@fortawesome/free-regular-svg-icons";
-import { faShare, faEye, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faShare, faEye, faSearch, faEdit, faGripLines } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
+import ProfilePostScreen from './ProfilePostScreen';
 
 export default function PostScreen() {
   return (
@@ -36,7 +38,6 @@ export default function PostScreen() {
           size={40}
         />
       </View>
-      <ScrollView>
         <View style={styles.postCounterContainer}>
           <View style={styles.counters}>
             <Text style={styles.countersText}>Post</Text>
@@ -55,135 +56,26 @@ export default function PostScreen() {
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <View style={styles.post}>
-            <View style={styles.postHeader}>
-              <View style={styles.postT}>
-                <Text style={styles.postTitleText}>Post Title</Text>
-              </View>
-              <View style={styles.postHeaderRight}>
-                <Text style={styles.postTime}>15m</Text>
-              </View>
-            </View>
-            <View style={styles.postBody}>
-              <Text style={styles.postParagraph}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
-              </Text>
-            </View>
-            <View style={styles.postFooter}>
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsUp} />
-              </TouchableOpacity>
+        <View style={styles.bracket}>
+        </View>
+      <View style={{marginBottom:10}}>
+        <ProfilePostScreen></ProfilePostScreen>
+      </View>
 
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsDown} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ flexDirection: "row" }}>
-                <FontAwesomeIcon icon={faEye} />
-                <Text style={{ marginLeft: 5 }}>200k+</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faShare} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.post}>
-            <View style={styles.postHeader}>
-              <View style={styles.postT}>
-                <Text style={styles.postTitleText}>Post Title</Text>
-              </View>
-              <View style={styles.postHeaderRight}>
-                <Text style={styles.postTime}>15m</Text>
-              </View>
-            </View>
-            <View style={styles.postBody}>
-              <Text style={styles.postParagraph}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
-              </Text>
-            </View>
-            <View style={styles.postFooter}>
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsUp} />
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsDown} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ flexDirection: "row" }}>
-                <FontAwesomeIcon icon={faEye} />
-                <Text style={{ marginLeft: 5 }}>200k+</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faShare} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.post}>
-            <View style={styles.postHeader}>
-              <View style={styles.postT}>
-                <Text style={styles.postTitleText}>Post Title</Text>
-              </View>
-              <View style={styles.postHeaderRight}>
-                <Text style={styles.postTime}>15m</Text>
-              </View>
-            </View>
-            <View style={styles.postBody}>
-              <Text style={styles.postParagraph}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
-              </Text>
-            </View>
-            <View style={styles.postFooter}>
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsUp} />
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsDown} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ flexDirection: "row" }}>
-                <FontAwesomeIcon icon={faEye} />
-                <Text style={{ marginLeft: 5 }}>200k+</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faShare} />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </ScrollView>
       <View style={styles.footer}>
         <TouchableOpacity>
           <View style={styles.addPostContainer}>
-            <FontAwesomeIcon color="#000000" icon={faSearch} size={30} />
-            <Text style={styles.addPostText}>Search</Text>
+            <FontAwesomeIcon color="#000000" icon={faGripLines} size={30} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
           <View style={styles.addScobContainer}>
-            <FontAwesomeIcon color="#000000" icon={faPlusSquare} size={30} />
-            <Text style={styles.addScobtext}>Add Scob</Text>
+            <FontAwesomeIcon color="#000000" icon={faEdit} size={30} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
           <View style={styles.addScobContainer}>
-            <FontAwesomeIcon color="#000000" icon={faBell} size={30} />
-            <Text style={styles.addScobtext}>Notification</Text>
+            <FontAwesomeIcon color="#000000" icon={faBookmark} size={30} />
           </View>
         </TouchableOpacity>
       </View>
@@ -312,5 +204,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
+  },
+  bracket: {
+    height: 10,
+    backgroundColor: "#68d391",
+    borderRadius: 5,
+    flexDirection: "column",
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 5,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.9,
   },
 });

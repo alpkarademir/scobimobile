@@ -30,7 +30,8 @@ export default function App() {
           <Scene key="homeScreen"
 	          component={HomeScreen}
 	          animation='fade'
-						hideNavBar={true}
+				hideNavBar={true}
+				initial={true}
 	        />
 			<Scene key="loginScreen"
 	          component={LoginScreen}
@@ -69,7 +70,7 @@ export default function App() {
 				component={ProfileScobScreen}
 				animation='fade'
 				hideNavBar={true}
-				initial={true}
+				
 	        />
 	      </Scene>
 	    </Router>
