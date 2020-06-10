@@ -12,9 +12,7 @@ import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
 export default function HomeScreen() {
-  onPressPostScreen = () => {
-    Actions.postScreen();
-  };
+  const onClick = () => { Actions.postScreen() }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -33,7 +31,7 @@ export default function HomeScreen() {
         />
       </View>
       <ScrollView>
-        <TouchableOpacity onPress = {this.onPressPostScreen}>
+        <TouchableOpacity onPress={onClick}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
@@ -60,7 +58,7 @@ export default function HomeScreen() {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {this.onPressPostScreen}>
+        <TouchableOpacity onPress={onClick}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
@@ -87,7 +85,7 @@ export default function HomeScreen() {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {this.onPressPostScreen}>
+        <TouchableOpacity onPress={onClick}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
@@ -114,7 +112,7 @@ export default function HomeScreen() {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {this.onPressPostScreen}>
+        <TouchableOpacity onPress={onClick}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
@@ -141,7 +139,7 @@ export default function HomeScreen() {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress = {this.onPressPostScreen}>
+        <TouchableOpacity onPress={onClick}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
