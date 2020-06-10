@@ -16,31 +16,37 @@ import {
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
 import { faShare, faFileSignature } from "@fortawesome/free-solid-svg-icons";
-import { faSellcast } from "@fortawesome/free-brands-svg-icons";
+import MainFooter from "./footers/MainFooter";
 
 export default function HomeScreen() {
-  const routeToPost = () => { Actions.postScreen() }
-  const routeToProfile = () => { Actions.profileScreen() }
-  const routeToContact = () => { Actions.contactScreen() }
+  const routeToPost = () => {
+    Actions.postScreen();
+  };
+  const routeToProfile = () => {
+    Actions.profileScreen();
+  };
+  const routeToContact = () => {
+    Actions.contactScreen();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={routeToProfile}>
-        <FontAwesomeIcon
-          style={styles.headerprofilePhotos}
-          color="#ffffff"
-          icon={faUserCircle}
-          size={40}
-        />
+          <FontAwesomeIcon
+            style={styles.headerprofilePhotos}
+            color="#ffffff"
+            icon={faUserCircle}
+            size={40}
+          />
         </TouchableOpacity>
         <Text style={styles.headerText}>Scobi</Text>
         <TouchableOpacity onPress={routeToContact}>
           <FontAwesomeIcon
-            style= {styles.headerIcon}
-            color= "#ffffff"
+            style={styles.headerIcon}
+            color="#ffffff"
             icon={faFileSignature}
             size={38}
-            />
+          />
         </TouchableOpacity>
       </View>
       <ScrollView>
@@ -255,6 +261,7 @@ export default function HomeScreen() {
           </View>
         </TouchableOpacity>
       </ScrollView>
+      <MainFooter />
     </View>
   );
 }
