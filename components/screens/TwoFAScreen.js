@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Button, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import TextInput1 from '../textinput';
+import TextInput1 from '../tfaTextInput';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 

@@ -7,12 +7,12 @@ export default function UselessTextInput() {
   return (
     <TextInput
       style={{
-        marginBottom: 25,
-        height: 40,
-        width: 200,
+        marginBottom: 15,
+        height: 110,
+        width: 300,
         borderColor: 'green',
         borderWidth: 1,
-        borderRadius: 30,
+        borderRadius: 10,
       }}
       onChangeText={text => onChangeText(text)}
       autoCorrect={false}

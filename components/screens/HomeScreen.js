@@ -1,6 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from "react-native";
-import { Actions } from 'react-native-router-flux';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { Actions } from "react-native-router-flux";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faUserCircle,
@@ -8,34 +15,44 @@ import {
   faThumbsDown,
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
-import { faShare } from "@fortawesome/free-solid-svg-icons";
+import { faShare, faFileSignature } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
 export default function HomeScreen() {
-  const onClick = () => { Actions.postScreen() }
+  const routeToPost = () => { Actions.postScreen() }
+  const routeToProfile = () => { Actions.profileScreen() }
+  const routeToContact = () => { Actions.contactScreen() }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={routeToProfile}>
         <FontAwesomeIcon
           style={styles.headerprofilePhotos}
           color="#ffffff"
           icon={faUserCircle}
           size={40}
         />
-        <Text style={styles.headerText}>Main</Text>
-        <FontAwesomeIcon
-          style={styles.headerIcon}
-          color="#ffffff"
-          icon={faSellcast}
-          size={40}
-        />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Scobi</Text>
+        <TouchableOpacity onPress={routeToContact}>
+          <FontAwesomeIcon
+            style= {styles.headerIcon}
+            color= "#ffffff"
+            icon={faFileSignature}
+            size={38}
+            />
+        </TouchableOpacity>
       </View>
       <ScrollView>
-        <TouchableOpacity onPress={onClick}>
+        <TouchableOpacity onPress={routeToPost}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
-                <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
+                <FontAwesomeIcon
+                  color="#000000"
+                  icon={faUserCircle}
+                  size={40}
+                />
                 <Text style={styles.postUsername}>Username</Text>
               </View>
               <View style={styles.postHeaderRight}>
@@ -46,23 +63,38 @@ export default function HomeScreen() {
               <Text style={styles.postTitle}>Post Title</Text>
               <Text style={styles.postParagraph}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text
-                ever since the 1500s.
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
               </Text>
             </View>
             <View style={styles.postFooter}>
-              <FontAwesomeIcon icon={faThumbsUp} />
-              <FontAwesomeIcon icon={faThumbsDown} />
-              <FontAwesomeIcon icon={faBookmark} />
-              <FontAwesomeIcon icon={faShare} />
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsUp} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsDown} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faBookmark} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faShare} />
+              </TouchableOpacity>
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onClick}>
+        <TouchableOpacity onPress={routeToPost}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
-                <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
+                <FontAwesomeIcon
+                  color="#000000"
+                  icon={faUserCircle}
+                  size={40}
+                />
                 <Text style={styles.postUsername}>Username</Text>
               </View>
               <View style={styles.postHeaderRight}>
@@ -73,23 +105,38 @@ export default function HomeScreen() {
               <Text style={styles.postTitle}>Post Title</Text>
               <Text style={styles.postParagraph}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text
-                ever since the 1500s.
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
               </Text>
             </View>
             <View style={styles.postFooter}>
-              <FontAwesomeIcon icon={faThumbsUp} />
-              <FontAwesomeIcon icon={faThumbsDown} />
-              <FontAwesomeIcon icon={faBookmark} />
-              <FontAwesomeIcon icon={faShare} />
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsUp} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsDown} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faBookmark} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faShare} />
+              </TouchableOpacity>
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onClick}>
+        <TouchableOpacity onPress={routeToPost}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
-                <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
+                <FontAwesomeIcon
+                  color="#000000"
+                  icon={faUserCircle}
+                  size={40}
+                />
                 <Text style={styles.postUsername}>Username</Text>
               </View>
               <View style={styles.postHeaderRight}>
@@ -100,23 +147,38 @@ export default function HomeScreen() {
               <Text style={styles.postTitle}>Post Title</Text>
               <Text style={styles.postParagraph}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text
-                ever since the 1500s.
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
               </Text>
             </View>
             <View style={styles.postFooter}>
-              <FontAwesomeIcon icon={faThumbsUp} />
-              <FontAwesomeIcon icon={faThumbsDown} />
-              <FontAwesomeIcon icon={faBookmark} />
-              <FontAwesomeIcon icon={faShare} />
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsUp} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsDown} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faBookmark} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faShare} />
+              </TouchableOpacity>
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onClick}>
+        <TouchableOpacity onPress={routeToPost}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
-                <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
+                <FontAwesomeIcon
+                  color="#000000"
+                  icon={faUserCircle}
+                  size={40}
+                />
                 <Text style={styles.postUsername}>Username</Text>
               </View>
               <View style={styles.postHeaderRight}>
@@ -127,23 +189,38 @@ export default function HomeScreen() {
               <Text style={styles.postTitle}>Post Title</Text>
               <Text style={styles.postParagraph}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text
-                ever since the 1500s.
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
               </Text>
             </View>
             <View style={styles.postFooter}>
-              <FontAwesomeIcon icon={faThumbsUp} />
-              <FontAwesomeIcon icon={faThumbsDown} />
-              <FontAwesomeIcon icon={faBookmark} />
-              <FontAwesomeIcon icon={faShare} />
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsUp} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsDown} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faBookmark} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faShare} />
+              </TouchableOpacity>
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onClick}>
+        <TouchableOpacity onPress={routeToPost}>
           <View style={styles.post}>
             <View style={styles.postHeader}>
               <View style={styles.postHeaderLeft}>
-                <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
+                <FontAwesomeIcon
+                  color="#000000"
+                  icon={faUserCircle}
+                  size={40}
+                />
                 <Text style={styles.postUsername}>Username</Text>
               </View>
               <View style={styles.postHeaderRight}>
@@ -154,15 +231,26 @@ export default function HomeScreen() {
               <Text style={styles.postTitle}>Post Title</Text>
               <Text style={styles.postParagraph}>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text
-                ever since the 1500s.
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s.
               </Text>
             </View>
             <View style={styles.postFooter}>
-              <FontAwesomeIcon icon={faThumbsUp} />
-              <FontAwesomeIcon icon={faThumbsDown} />
-              <FontAwesomeIcon icon={faBookmark} />
-              <FontAwesomeIcon icon={faShare} />
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsUp} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faThumbsDown} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faBookmark} />
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <FontAwesomeIcon icon={faShare} />
+              </TouchableOpacity>
             </View>
           </View>
         </TouchableOpacity>
@@ -174,10 +262,6 @@ export default function HomeScreen() {
 const screenHeight = Math.round(Dimensions.get("window").height);
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#E2E8F0",
-    height: screenHeight,
-  },
   header: {
     height: 80,
     paddingTop: 30,
@@ -197,11 +281,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
     paddingTop: 5,
+    paddingRight: 10,
   },
-  headerIcon: {
-    marginRight: 10,
+  container: {
+    backgroundColor: "#E2E8F0",
+    height: screenHeight,
   },
-
   post: {
     height: 210,
     backgroundColor: "#E2E8F0",
@@ -255,5 +340,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  headerIcon: {
+    marginRight: 10,
   },
 });

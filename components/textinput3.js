@@ -7,9 +7,10 @@ export default function UselessTextInput() {
   return (
     <TextInput
       style={{
-        marginBottom: 25,
+        marginTop: 5,
+        marginBottom: 10,
         height: 40,
-        width: 200,
+        width: 320,
         borderColor: 'green',
         borderWidth: 1,
         borderRadius: 30,

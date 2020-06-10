@@ -7,6 +7,8 @@ import HomeScreen from './components/screens/HomeScreen';
 import LoginScreen from './components/screens/LoginScreen';
 import SignUpScreen from './components/screens/SignUpScreen';
 import PostScreen from './components/screens/PostScreen';
+import CommentScreen from './components/screens/CommentScreen';
+import ContactScreen from './components/screens/ContactScreen';
 
 export default function App() {
   return (
@@ -32,7 +34,7 @@ export default function App() {
 	          component={LoginScreen}
 	          animation='fade'
             hideNavBar={true}
-            initial={true}
+            
 	        />
 			<Scene key="signupScreen"
 				component={SignUpScreen}
@@ -43,6 +45,18 @@ export default function App() {
 				component={PostScreen}
 				animation='fade'
 				hideNavBar={true}
+	        />
+			<Scene key="commentScreen"
+				component={CommentScreen}
+				animation='fade'
+				hideNavBar={true}
+				initial={true}
+	        />
+			<Scene key="contactScreen"
+				component={ContactScreen}
+				animation='fade'
+				hideNavBar={true}
+				
 	        />
 	      </Scene>
 	    </Router>
