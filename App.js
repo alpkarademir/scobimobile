@@ -9,6 +9,8 @@ import SignUpScreen from './components/screens/SignUpScreen';
 import PostScreen from './components/screens/PostScreen';
 import CommentScreen from './components/screens/CommentScreen';
 import ContactScreen from './components/screens/ContactScreen';
+import ProfilePostScreen from './components/screens/ProfilePostScreen';
+import ProfileScobScreen from './components/screens/ProfileScobScreen';
 
 export default function App() {
   return (
@@ -50,13 +52,24 @@ export default function App() {
 				component={CommentScreen}
 				animation='fade'
 				hideNavBar={true}
-				initial={true}
+				
 	        />
 			<Scene key="contactScreen"
 				component={ContactScreen}
 				animation='fade'
 				hideNavBar={true}
 				
+	        />
+			<Scene key="profilePostScreen"
+				component={ProfilePostScreen}
+				animation='fade'
+				hideNavBar={true}
+	        />
+			<Scene key="profileScobScreen"
+				component={ProfileScobScreen}
+				animation='fade'
+				hideNavBar={true}
+				initial={true}
 	        />
 	      </Scene>
 	    </Router>
