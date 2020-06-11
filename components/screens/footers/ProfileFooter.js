@@ -8,57 +8,55 @@ import {
 } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faPlusSquare, faBell } from "@fortawesome/free-regular-svg-icons";
+import {
+  faUserCircle,
+  faThumbsUp,
+  faThumbsDown,
+  faPlusSquare,
+  faBell,
+  faBookmark,
+} from "@fortawesome/free-regular-svg-icons";
 import {
   faShare,
-  faEye,
-  faSearch,
-  faSignOutAlt,
+  faCheck,
+  faEdit,
+  faGripLines,
 } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { logout } from "../../../redux/actions/auth";
 import PropTypes from "prop-types";
 
-function MainFooter({ logout }) {
-  const routeToSearch = () => {
-    Actions.searchScreen();
+export default function ProfileFooter() {
+  const routeToProfile = () => {
+    Actions.profileScreen();
   };
-  const routeToNofication = () => {
-    Actions.notificationScreen();
+  const routeToScob = () => {
+    Actions.profileScobScreen();
   };
-  const routeToAdd = () => {
-    Actions.contentAddScreen();
+  const routeToBookmark = () => {
+    Actions.profileBookmarkScreen();
   };
 
   return (
-    <View style={styles.footer}>
-      <TouchableOpacity onPress={routeToSearch}>
+    <View style={styles.footer} onPress={routeToProfile}>
+      <TouchableOpacity>
         <View style={styles.addPostContainer}>
-          <FontAwesomeIcon color="#000000" icon={faSearch} size={30} />
+          <FontAwesomeIcon color="#000000" icon={faGripLines} size={30} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={routeToAdd}>
+      <TouchableOpacity onPress={routeToScob}>
         <View style={styles.addScobContainer}>
-          <FontAwesomeIcon color="#000000" icon={faPlusSquare} size={30} />
+          <FontAwesomeIcon color="#000000" icon={faEdit} size={30} />
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={routeToNofication}>
+      <TouchableOpacity onPress={routeToBookmark}>
         <View style={styles.addScobContainer}>
-          <FontAwesomeIcon color="#000000" icon={faBell} size={30} />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => logout()}>
-        <View style={styles.addScobContainer}>
-          <FontAwesomeIcon color="#000000" icon={faSignOutAlt} size={30} />
+          <FontAwesomeIcon color="#000000" icon={faBookmark} size={30} />
         </View>
       </TouchableOpacity>
     </View>
   );
 }
-
-MainFooter.propTypes = {
-  logout: PropTypes.func.isRequired,
-};
 
 const screenHeight = Math.round(Dimensions.get("window").height);
 
@@ -73,6 +71,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 5,
     bottom: 0,
+    width: "100%",
   },
   addPostContainer: {
     alignItems: "center",
@@ -91,5 +90,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
-export default connect(null, { logout })(MainFooter);

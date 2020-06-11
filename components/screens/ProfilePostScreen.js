@@ -17,127 +17,203 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faShare, faEye } from "@fortawesome/free-solid-svg-icons";
 
-export default function ProfilePostScreen(){
-    const routeToPost = () => { Actions.postScreen() }
-return (
-        <ScrollView>
-        <TouchableOpacity>
-          <View style={styles.post}>
-            <View style={styles.postHeader}>
-              <View style={styles.postT}>
-                <Text style={styles.postTitleText}>Post Title</Text>
-              </View>
-              <View style={styles.postHeaderRight}>
-                <Text style={styles.postTime}>15m</Text>
-              </View>
+export default function ProfilePostScreen() {
+  const routeToPost = () => {
+    Actions.postScreen();
+  };
+  return (
+    <ScrollView>
+      <TouchableOpacity>
+        <View style={styles.post}>
+          <View style={styles.postHeader}>
+            <View style={styles.postT}>
+              <Text style={styles.postTitleText}>Post Title</Text>
             </View>
-            <View style={styles.postBody}>
-              <Text style={styles.postParagraph}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
-              </Text>
-            </View>
-            <View style={styles.postFooter}>
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsUp} />
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsDown} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ flexDirection: "row" }}>
-                <FontAwesomeIcon icon={faEye} />
-                <Text style={{ marginLeft: 5 }}>200k+</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faShare} />
-              </TouchableOpacity>
+            <View style={styles.postHeaderRight}>
+              <Text style={styles.postTime}>15m</Text>
             </View>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.post}>
-            <View style={styles.postHeader}>
-              <View style={styles.postT}>
-                <Text style={styles.postTitleText}>Post Title</Text>
-              </View>
-              <View style={styles.postHeaderRight}>
-                <Text style={styles.postTime}>15m</Text>
-              </View>
+          <View style={styles.postBody}>
+            <Text style={styles.postParagraph}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </Text>
+          </View>
+          <View style={styles.postFooter}>
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsUp} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+              <FontAwesomeIcon icon={faEye} />
+              <Text style={{ marginLeft: 5 }}>200k+</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faShare} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.post}>
+          <View style={styles.postHeader}>
+            <View style={styles.postT}>
+              <Text style={styles.postTitleText}>Post Title</Text>
             </View>
-            <View style={styles.postBody}>
-              <Text style={styles.postParagraph}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
-              </Text>
-            </View>
-            <View style={styles.postFooter}>
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsUp} />
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsDown} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ flexDirection: "row" }}>
-                <FontAwesomeIcon icon={faEye} />
-                <Text style={{ marginLeft: 5 }}>200k+</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faShare} />
-              </TouchableOpacity>
+            <View style={styles.postHeaderRight}>
+              <Text style={styles.postTime}>15m</Text>
             </View>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.post}>
-            <View style={styles.postHeader}>
-              <View style={styles.postT}>
-                <Text style={styles.postTitleText}>Post Title</Text>
-              </View>
-              <View style={styles.postHeaderRight}>
-                <Text style={styles.postTime}>15m</Text>
-              </View>
+          <View style={styles.postBody}>
+            <Text style={styles.postParagraph}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </Text>
+          </View>
+          <View style={styles.postFooter}>
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsUp} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+              <FontAwesomeIcon icon={faEye} />
+              <Text style={{ marginLeft: 5 }}>200k+</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faShare} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.post}>
+          <View style={styles.postHeader}>
+            <View style={styles.postT}>
+              <Text style={styles.postTitleText}>Post Title</Text>
             </View>
-            <View style={styles.postBody}>
-              <Text style={styles.postParagraph}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s.
-              </Text>
-            </View>
-            <View style={styles.postFooter}>
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsUp} />
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faThumbsDown} />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ flexDirection: "row" }}>
-                <FontAwesomeIcon icon={faEye} />
-                <Text style={{ marginLeft: 5 }}>200k+</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <FontAwesomeIcon icon={faShare} />
-              </TouchableOpacity>
+            <View style={styles.postHeaderRight}>
+              <Text style={styles.postTime}>15m</Text>
             </View>
           </View>
-        </TouchableOpacity>
-      </ScrollView>
-        )
-    }
+          <View style={styles.postBody}>
+            <Text style={styles.postParagraph}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </Text>
+          </View>
+          <View style={styles.postFooter}>
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsUp} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+              <FontAwesomeIcon icon={faEye} />
+              <Text style={{ marginLeft: 5 }}>200k+</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faShare} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.post}>
+          <View style={styles.postHeader}>
+            <View style={styles.postT}>
+              <Text style={styles.postTitleText}>Post Title</Text>
+            </View>
+            <View style={styles.postHeaderRight}>
+              <Text style={styles.postTime}>15m</Text>
+            </View>
+          </View>
+          <View style={styles.postBody}>
+            <Text style={styles.postParagraph}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </Text>
+          </View>
+          <View style={styles.postFooter}>
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsUp} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+              <FontAwesomeIcon icon={faEye} />
+              <Text style={{ marginLeft: 5 }}>200k+</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faShare} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <View style={styles.post}>
+          <View style={styles.postHeader}>
+            <View style={styles.postT}>
+              <Text style={styles.postTitleText}>Post Title</Text>
+            </View>
+            <View style={styles.postHeaderRight}>
+              <Text style={styles.postTime}>15m</Text>
+            </View>
+          </View>
+          <View style={styles.postBody}>
+            <Text style={styles.postParagraph}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s.
+            </Text>
+          </View>
+          <View style={styles.postFooter}>
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsUp} />
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faThumbsDown} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{ flexDirection: "row" }}>
+              <FontAwesomeIcon icon={faEye} />
+              <Text style={{ marginLeft: 5 }}>200k+</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity>
+              <FontAwesomeIcon icon={faShare} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
 
 const screenHeight = Math.round(Dimensions.get("window").height);
-    
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#E2E8F0",
@@ -186,7 +262,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   post: {
-    height: 150,
+    flex: 1,
     backgroundColor: "#E2E8F0",
     borderRadius: 10,
     flexDirection: "column",

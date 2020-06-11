@@ -22,37 +22,31 @@ import {
   faCheck,
   faEdit,
   faGripLines,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
-import ProfilePostScreen from "./ProfilePostScreen";
-import profileScobScreen from "./ProfileScobScreen";
-import profileBookmarkScreen from "./ProfileBookmarkScreen";
-import ProfileFooter from "./footers/ProfileFooter";
+import ProfileScreen from "./ProfileScreen";
 
-export default function ProfileScreen() {
+export default function ProfileEditScreen() {
   const routeToProfile = () => {
     Actions.profileScreen();
   };
-  const routeToScob = () => {
-    Actions.profileScobScreen();
-  };
+
   const routeToHome = () => {
     Actions.homeScreen();
   };
-  const routeToBookmark = () => {
-    Actions.profileBookmarkScreen();
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <FontAwesomeIcon
-          style={styles.headerprofilePhotos}
-          color="#ffffff"
-          icon={faUserCircle}
-          size={40}
-        />
-        <Text style={styles.headerText}>Username</Text>
+        <TouchableOpacity onPress={routeToProfile}>
+          <FontAwesomeIcon
+            style={styles.headerprofilePhotos}
+            color="#ffffff"
+            icon={faArrowLeft}
+            size={30}
+          />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Edit</Text>
         <TouchableOpacity onPress={routeToHome}>
           <FontAwesomeIcon
             style={styles.headerIcon}
@@ -62,35 +56,6 @@ export default function ProfileScreen() {
           />
         </TouchableOpacity>
       </View>
-      <ScrollView style={styles.postScreen}></ScrollView>
-      <View style={styles.postCounterContainer}>
-        <View style={styles.counters}>
-          <Text style={styles.countersText}>Post</Text>
-          <Text style={styles.countersText}>3</Text>
-        </View>
-        <TouchableOpacity>
-          <View style={styles.counters}>
-            <Text style={styles.countersText}>Followers</Text>
-            <Text style={styles.countersText}>12M</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.counters}>
-            <Text style={styles.countersText}>Following</Text>
-            <Text style={styles.countersText}>113</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.bracket}>
-        <TouchableOpacity style={styles.loginButton}>
-          <FontAwesomeIcon icon={faCheck} size={15} color="#ffffff" />
-          <Text style={styles.loginText}>Follow</Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView>
-        <ProfilePostScreen />
-      </ScrollView>
-      <ProfileFooter />
     </View>
   );
 }
@@ -100,10 +65,7 @@ const screenHeight = Math.round(Dimensions.get("window").height);
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#E2E8F0",
-    height: "100%",
-  },
-  container1: {
-    flex: 1,
+    height: screenHeight,
   },
   header: {
     height: 80,
@@ -146,64 +108,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "700",
     fontSize: 15,
-  },
-  post: {
-    flex: 1,
-  },
-  postTitle: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  postHeaderRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  postTime: {
-    fontWeight: "400",
-  },
-  postBody: {
-    paddingLeft: 15,
-    paddingRight: 15,
-  },
-  postTitleText: {
-    fontWeight: "bold",
-    fontSize: 20,
-    marginLeft: 15,
-  },
-  postParagraph: {
-    marginTop: 5,
-  },
-  postFooter: {
-    marginTop: 30,
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  footer: {
-    height: 50,
-    alignItems: "center",
-    backgroundColor: "#CBD5E0",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    borderTopWidth: 3,
-    paddingTop: 10,
-    paddingBottom: 5,
-  },
-  addPostContainer: {
-    alignItems: "center",
-  },
-  addPostText: {
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  addScobContainer: {
-    alignItems: "center",
-  },
-  addScobtext: {
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
   },
   bracket: {
     height: 30,

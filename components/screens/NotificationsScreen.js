@@ -1,41 +1,33 @@
 import * as React from "react";
 import {
   View,
-  Button,
   TextComponent,
   Text,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Image,
 } from "react-native";
+import { Card, ListItem, Button, Icon } from "react-native-elements";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  faThumbsUp,
-  faThumbsDown,
-  faBookmark,
-} from "@fortawesome/free-regular-svg-icons";
+import { faThumbsUp, faThumbsDown } from "@fortawesome/free-regular-svg-icons";
 import { faShare, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
 import { Actions } from "react-native-router-flux";
-import { SearchBar } from "react-native-elements";
 
-export default class Search extends React.Component {
+const users = [
+  {
+    name: "This is a new notification...",
+  },
+];
+
+export default class Notification extends React.Component {
   onPressBack = () => {
     Actions.homeScreen();
   };
 
-  state = {
-    search: "",
-  };
-
-  updateSearch = (search) => {
-    this.setState({ search });
-  };
-
   render() {
-    const { search } = this.state;
-
     return (
       <View>
         <View style={styles.header}>
@@ -47,7 +39,7 @@ export default class Search extends React.Component {
               size={30}
             />
           </TouchableOpacity>
-          <Text style={styles.headerText}>Search</Text>
+          <Text style={styles.headerText}> Notifications</Text>
           <TouchableOpacity onPress={this.onPressBack}>
             <FontAwesomeIcon
               style={styles.headerIcon}
@@ -57,14 +49,19 @@ export default class Search extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        <SearchBar
-          lightTheme
-          round
-          placeholder="Search for Users"
-          onChangeText={this.updateSearch}
-          value={search}
-          platform="ios"
-        />
+
+        <Card title="Latest Notifications">
+          {users.map((u, i) => {
+            return (
+              <ListItem
+                key={i}
+                roundAvatar
+                title={u.name}
+                avatar={{ uri: u.avatar }}
+              />
+            );
+          })}
+        </Card>
       </View>
     );
   }
@@ -101,7 +98,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#ffffff",
     paddingTop: 5,
-    paddingRight: 10,
+    paddingRight: 5,
   },
   headerIcon: {
     marginRight: 10,

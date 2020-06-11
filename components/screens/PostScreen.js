@@ -6,6 +6,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Actions } from "react-native-router-flux";
@@ -14,102 +15,201 @@ import {
   faThumbsUp,
   faThumbsDown,
   faBookmark,
+  faTrashAlt,
 } from "@fortawesome/free-regular-svg-icons";
-import { faShare, faPlus } from "@fortawesome/free-solid-svg-icons";
+
+import {
+  faShare,
+  faPlus,
+  faEye,
+  faThumbsUp as faThumbsUpSolid,
+  faThumbsDown as faThumbsDownSolid,
+} from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
-export default function PostScreen() {
-  const routeToMain = () => { Actions.homeScreen() }
-  const routeToProfile = () => { Actions.profileScreen() }
-  const routeToComment = () => { Actions.commentScreen() }
+import { connect } from "react-redux";
+import {
+  addLike,
+  removeLike,
+  addDislike,
+  removeDislike,
+} from "../../redux/actions/post";
+import PropTypes from "prop-types";
+
+import TimeAgo from "react-native-timeago";
+import Markdown from "react-native-markdown-renderer";
+
+function PostScreen({
+  post,
+  user,
+  addLike,
+  removeLike,
+  addDislike,
+  removeDislike,
+}) {
+  const routeToMain = () => {
+    Actions.homeScreen();
+  };
+  const routeToProfile = () => {
+    Actions.profileScreen();
+  };
+  const routeToComment = () => {
+    Actions.commentScreen();
+  };
+
+  const onPressLike = () => {
+    if (
+      user &&
+      post.likes.filter((like) => like.user._id == user._id).length > 0
+    ) {
+      removeLike(post._id);
+    } else {
+      addLike(post._id);
+    }
+  };
+
+  const onPressDislike = () => {
+    console.warn(post._id);
+    if (
+      user &&
+      post.dislikes.filter((like) => like.user._id == user._id).length > 0
+    ) {
+      removeDislike(post._id);
+    } else {
+      addDislike(post._id);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={routeToProfile}>
-        <FontAwesomeIcon
-          style={styles.headerprofilePhotos}
-          color="#ffffff"
-          icon={faUserCircle}
-          size={40}
-        />
+          <FontAwesomeIcon
+            style={styles.headerprofilePhotos}
+            color="#ffffff"
+            icon={faUserCircle}
+            size={40}
+          />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Author Username</Text>
+        <Text style={styles.headerText}>Scobi</Text>
         <TouchableOpacity onPress={routeToMain}>
-        <FontAwesomeIcon
-          style={styles.headerIcon}
-          color="#ffffff"
-          icon={faSellcast}
-          size={40}
-        />
+          <FontAwesomeIcon
+            style={styles.headerIcon}
+            color="#ffffff"
+            icon={faSellcast}
+            size={40}
+          />
         </TouchableOpacity>
       </View>
-      <ScrollView>
-        <View style={styles.post}>
-          <View style={styles.postHeader}>
-            <View style={styles.postHeaderLeft}>
-              <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
-              <Text style={styles.postUsername}>Username</Text>
-            </View>
-            <View style={styles.postHeaderRight}>
-              <Text style={styles.postTime}>15m</Text>
-            </View>
+      {post && (
+        <View style={styles.postHeader}>
+          <View style={styles.postHeaderLeft}>
+            <Image
+              style={styles.postAvatar}
+              source={{ uri: "https:" + post.avatar }}
+            />
+            <Text style={styles.postUsername}>{post.username}</Text>
           </View>
-          <View style={styles.postBody}>
-            <Text style={styles.postTitle}>Post Title</Text>
-            <Text style={styles.postParagraph}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.Lorem Ipsum is simply dummy text of the
-              printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s.Lorem Ipsum is
-              simply dummy text of the printing and typesetting industry. Lorem
-              Ipsum has been the industry's standard dummy text ever since the
-              1500s.Lorem Ipsum is simply dummy text of the printing and
-              typesetting industry. Lorem Ipsum has been the industry's standard
-              dummy text ever since the 1500s.Lorem Ipsum is simply dummy text
-              of the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s.
-            </Text>
-          </View>
-          <View style={styles.postFooter}>
+          <View style={styles.postHeaderRight}>
+            <View style={styles.postTime}>
+              <TimeAgo time={post.date} />
+            </View>
             <TouchableOpacity>
-              <FontAwesomeIcon icon={faThumbsUp} />
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faThumbsDown} />
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faBookmark} />
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faShare} />
+              <FontAwesomeIcon style={{ marginLeft: 5 }} icon={faTrashAlt} />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.commentButton} onPress={routeToComment}>
-            <View style={styles.commentContainer}>
-              <View style={styles.commentPlus}>
-                <FontAwesomeIcon icon={faPlus} color="#FFFFFF" size={20} />
-              </View>
-              <View style={styles.commentButonTextContainer}>
-                <Text style={styles.commentButonText}>Comment</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
         </View>
-      </ScrollView>
+      )}
+
+      {post ? (
+        <View style={styles.post}>
+          <View style={styles.postBody}>
+            <ScrollView style={styles.markdownContainer}>
+              <Text style={styles.postTitle}>{post.title}</Text>
+              <Markdown style={styles.postParagraph}>{post.text}</Markdown>
+              <View style={styles.postFooter}>
+                <TouchableOpacity
+                  style={styles.likeButton}
+                  onPress={onPressLike}
+                >
+                  {user &&
+                  post.likes.filter((like) => like.user._id == user._id)
+                    .length > 0 ? (
+                    <FontAwesomeIcon icon={faThumbsUpSolid} />
+                  ) : (
+                    <FontAwesomeIcon icon={faThumbsUp} />
+                  )}
+                  <Text style={styles.likeText}>{post.likes.length}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.likeButton}
+                  onPress={onPressDislike}
+                >
+                  {user &&
+                  post.dislikes.filter(
+                    (dislike) => dislike.user._id == user._id
+                  ).length > 0 ? (
+                    <FontAwesomeIcon icon={faThumbsDownSolid} />
+                  ) : (
+                    <FontAwesomeIcon icon={faThumbsDown} />
+                  )}
+                  <Text style={styles.likeText}>{post.dislikes.length}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{ flexDirection: "row" }}>
+                  <FontAwesomeIcon icon={faEye} />
+                  <Text style={{ marginLeft: 5 }}>{post.views.length}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <FontAwesomeIcon icon={faBookmark} />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <FontAwesomeIcon icon={faShare} />
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                style={styles.commentButton}
+                onPress={routeToComment}
+              >
+                <View style={styles.commentContainer}>
+                  <View style={styles.commentPlus}>
+                    <FontAwesomeIcon icon={faPlus} color="#FFFFFF" size={20} />
+                  </View>
+                  <View style={styles.commentButonTextContainer}>
+                    <Text style={styles.commentButonText}>Comment</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </View>
+      ) : (
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      )}
     </View>
   );
 }
+
+PostScreen.propTypes = {
+  post: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  addLike: PropTypes.func.isRequired,
+  removeLike: PropTypes.func.isRequired,
+  addDislike: PropTypes.func.isRequired,
+  removeDislike: PropTypes.func.isRequired,
+};
 
 const screenHeight = Math.round(Dimensions.get("window").height);
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#E2E8F0",
-    height: screenHeight,
+    height: "100%",
   },
   header: {
     height: 80,
@@ -135,11 +235,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   post: {
-    height: screenHeight,
     backgroundColor: "#E2E8F0",
     borderRadius: 10,
     flexDirection: "column",
-    marginTop: 10,
+    marginTop: 5,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -147,7 +246,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E2E8F0",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 20,
+    marginTop: 10,
   },
   postHeaderLeft: {
     flexDirection: "row",
@@ -179,7 +278,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   postParagraph: {
-    marginTop: 20,
+    marginTop: 10,
   },
   postFooter: {
     marginTop: 30,
@@ -197,6 +296,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.7,
+    marginBottom: 10,
   },
   commentContainer: {
     flexDirection: "row",
@@ -222,4 +322,33 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     marginLeft: 10,
   },
+  postAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    resizeMode: "stretch",
+  },
+  markdownContainer: {
+    height: "89%",
+    paddingBottom: 10,
+  },
+  likeButton: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  likeText: {
+    marginLeft: 10,
+  },
 });
+
+const mapStateToProps = (state) => ({
+  post: state.post.post,
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, {
+  addLike,
+  removeLike,
+  addDislike,
+  removeDislike,
+})(PostScreen);

@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Button} from 'react-native';
+import React, { Component } from "react";
+import { Text, View, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { Actions } from "react-native-router-flux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -10,11 +10,10 @@ import {
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
-import { faSellcast } from "@fortawesome/free-brands-svg-icons";  
+import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
-
-import TextInput from '../textinput';
-import TextInput2 from '../textinput2';
+import TextInput from "../textinput";
+import TextInput2 from "../textinput2";
 
 export default class Contact extends Component {
   onPressLogo = () => {
@@ -22,41 +21,43 @@ export default class Contact extends Component {
   };
   onPressBack = () => {
     Actions.postScreen();
-  }
+  };
   render() {
     return (
-      <View>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={this.onPressBack}>
-        <FontAwesomeIcon
-          style={styles.headerprofilePhotos}
-          color="#ffffff"
-          icon={faUserCircle}
-          size={40}
-        />
-        </TouchableOpacity >
-        <Text style={styles.headerText}>Contact</Text>
-        <TouchableOpacity onPress={this.onPressLogo}>
-        <FontAwesomeIcon
-          style={styles.headerIcon}
-          color="#ffffff"
-          icon={faSellcast}
-          size={40}
-        />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.textArea1}>* These fields are required.</Text>
-        <Text style={styles.textArea}> *Name </Text>
-        <TextInput />
-        <Text style={styles.textArea}> *Surname </Text>
-        <TextInput />
-        <Text>*Email</Text>
-        <TextInput />
-        <Text>*Message</Text>
-        <TextInput2 />
-        <Button title="Send" color="green" />
-      </View>
+      <View style={{ flex: 1 }}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={this.onPressBack}>
+            <FontAwesomeIcon
+              style={styles.headerprofilePhotos}
+              color="#ffffff"
+              icon={faUserCircle}
+              size={40}
+            />
+          </TouchableOpacity>
+          <Text style={styles.headerText}>Contact</Text>
+          <TouchableOpacity onPress={this.onPressLogo}>
+            <FontAwesomeIcon
+              style={styles.headerIcon}
+              color="#ffffff"
+              icon={faSellcast}
+              size={40}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Text style={styles.textArea1}>* These fields are required.</Text>
+          <Text style={styles.textArea}> *Name </Text>
+          <TextInput />
+          <Text style={styles.textArea}> *Surname </Text>
+          <TextInput />
+          <Text style={styles.textArea}>*Email</Text>
+          <TextInput />
+          <Text style={styles.textArea}>*Message</Text>
+          <TextInput2 />
+          <TouchableOpacity style={styles.loginButton}>
+            <Text style={styles.loginText}>Send</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -64,24 +65,22 @@ export default class Contact extends Component {
 
 const styles = StyleSheet.create({
   contact: {
-    flex: 0.3,
     fontSize: 30,
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   textArea: {
-    flex: 0.1,
+    marginBottom: 10,
   },
   textArea1: {
-    flex: 0.2,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     fontSize: 10,
-    fontStyle: 'italic',
-    marginTop: 10,
-    marginBottom: 10,
+    fontStyle: "italic",
+    marginTop: 15,
+    marginBottom: 40,
   },
   header: {
     height: 80,
@@ -106,5 +105,27 @@ const styles = StyleSheet.create({
   },
   headerIcon: {
     marginRight: 10,
+  },
+  loginButton: {
+    height: 35,
+    width: 100,
+    backgroundColor: "#2F855A",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#C6F6D5",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
+    flexDirection: "row",
+  },
+  loginText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#ffffff",
   },
 });

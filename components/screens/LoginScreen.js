@@ -15,17 +15,37 @@ import {
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
 import { Actions } from "react-native-router-flux";
+import { connect } from "react-redux";
+import { login } from "../../redux/actions/auth";
+import PropTypes from "prop-types";
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
+  static propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+    login: PropTypes.func.isRequired,
+  };
+
+  state = {
+    email: "",
+    password: "",
+  };
+
   onPressCreateAccount = () => {
     Actions.signupScreen();
   };
 
   onPressLogin = () => {
-    Actions.twofaScreen();
+    // Actions.twofaScreen();
+    const { email, password } = this.state;
+    this.props.login(email, password);
   };
 
   render() {
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) {
+      Actions.homeScreen();
+    }
     return (
       <View style={styles.container}>
         <View style={styles.form}>
@@ -38,15 +58,17 @@ export default class LoginScreen extends Component {
           <Text style={styles.iconText}>Scobi Social</Text>
           <TextInput
             style={styles.input}
-            placeholder="Username"
+            placeholder="Email"
             autoCapitalize="none"
             placeholderTextColor="#A3A3A1"
+            onChangeText={(text) => this.setState({ email: text })}
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
             secureTextEntry={true}
             placeholderTextColor="#A3A3A1"
+            onChangeText={(text) => this.setState({ password: text })}
           />
           <TouchableOpacity
             style={styles.loginButton}
@@ -195,3 +217,9 @@ const styles = StyleSheet.create({
     fontWeight: "300",
   },
 });
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(LoginScreen);
