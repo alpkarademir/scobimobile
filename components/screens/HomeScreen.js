@@ -24,14 +24,15 @@ import {
 import MainFooter from "./footers/MainFooter";
 
 import { connect } from "react-redux";
-import { getPosts, getPost } from "../../redux/actions/post";
+import { getPosts, getPost, getUsersPosts } from "../../redux/actions/post";
+import { getProfileByUsername } from '../../redux/actions/profile';
 import PropTypes from "prop-types";
 
 import TimeAgo from "react-native-timeago";
 
 import { Avatar } from "react-native-elements";
 
-function HomeScreen({ auth, getPosts, posts, getPost }) {
+function HomeScreen({ auth, getPosts, posts, getPost, getProfileByUsername, getUsersPosts }) {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
@@ -41,7 +42,11 @@ function HomeScreen({ auth, getPosts, posts, getPost }) {
     Actions.postScreen();
   };
   const routeToProfile = () => {
-    Actions.profileScreen();
+    if (auth.user) {
+      getProfileByUsername(auth.user.username);
+      getUsersPosts(auth.user.username);
+      Actions.profileScreen();
+    }
   };
   const routeToContact = () => {
     Actions.contactScreen();
@@ -128,6 +133,8 @@ HomeScreen.propTypes = {
   getPosts: PropTypes.func.isRequired,
   posts: PropTypes.array.isRequired,
   getPost: PropTypes.func.isRequired,
+  getProfileByUsername: PropTypes.func.isRequired,
+  getUsersPosts: PropTypes.func.isRequired,
 };
 
 const screenHeight = Math.round(Dimensions.get("window").height);
@@ -243,4 +250,4 @@ const mapStateToProps = (state) => ({
   posts: state.post.posts,
 });
 
-export default connect(mapStateToProps, { getPosts, getPost })(HomeScreen);
+export default connect(mapStateToProps, { getPosts, getPost, getProfileByUsername, getUsersPosts})(HomeScreen);

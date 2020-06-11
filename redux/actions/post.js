@@ -12,6 +12,8 @@ import {
   GET_BOOKMARKS,
   UPDATE_BOOKMARKS,
   CLEAR_POST,
+  CLEAR_USER_POSTS,
+  GET_USER_POSTS
 } from "./types";
 import { endPoint } from "../api";
 
@@ -28,6 +30,24 @@ export const getPosts = () => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const getUsersPosts = username => async dispatch => {
+  dispatch(clearUserPosts());
+
+  try {
+    const res = await axios.get(`${endPoint}/api/posts/user/${username}`);
+
+    dispatch({
+      type: GET_USER_POSTS,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
 };
@@ -53,6 +73,12 @@ export const getPost = (id) => async (dispatch) => {
 export const clearPost = () => (dispatch) => {
   dispatch({
     type: CLEAR_POST,
+  });
+};
+
+export const clearUserPosts = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_USER_POSTS,
   });
 };
 

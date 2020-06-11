@@ -24,6 +24,7 @@ import {
   faEye,
   faThumbsUp as faThumbsUpSolid,
   faThumbsDown as faThumbsDownSolid,
+  faArrowLeft
 } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
@@ -33,7 +34,9 @@ import {
   removeLike,
   addDislike,
   removeDislike,
+  getUsersPosts
 } from "../../redux/actions/post";
+import { getProfileByUsername } from '../../redux/actions/profile';
 import PropTypes from "prop-types";
 
 import TimeAgo from "react-native-timeago";
@@ -46,6 +49,8 @@ function PostScreen({
   removeLike,
   addDislike,
   removeDislike,
+  getUsersPosts,
+  getProfileByUsername
 }) {
   const routeToMain = () => {
     Actions.homeScreen();
@@ -80,15 +85,21 @@ function PostScreen({
     }
   };
 
+  const onPressPostHeaderLeft = () => {
+    getProfileByUsername(post.username);
+    getUsersPosts(post.username);
+    Actions.profileScreen();
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={routeToProfile}>
+        <TouchableOpacity onPress={routeToMain}>
           <FontAwesomeIcon
             style={styles.headerprofilePhotos}
             color="#ffffff"
-            icon={faUserCircle}
-            size={40}
+            icon={faArrowLeft}
+            size={30}
           />
         </TouchableOpacity>
         <Text style={styles.headerText}>Scobi</Text>
@@ -103,13 +114,13 @@ function PostScreen({
       </View>
       {post && (
         <View style={styles.postHeader}>
-          <View style={styles.postHeaderLeft}>
+          <TouchableOpacity onPress={onPressPostHeaderLeft} style={styles.postHeaderLeft}>
             <Image
               style={styles.postAvatar}
               source={{ uri: "https:" + post.avatar }}
             />
             <Text style={styles.postUsername}>{post.username}</Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.postHeaderRight}>
             <View style={styles.postTime}>
               <TimeAgo time={post.date} />
@@ -202,6 +213,8 @@ PostScreen.propTypes = {
   removeLike: PropTypes.func.isRequired,
   addDislike: PropTypes.func.isRequired,
   removeDislike: PropTypes.func.isRequired,
+  getUsersPosts: PropTypes.func.isRequired,
+  getProfileByUsername: PropTypes.func.isRequired,
 };
 
 const screenHeight = Math.round(Dimensions.get("window").height);
@@ -351,4 +364,6 @@ export default connect(mapStateToProps, {
   removeLike,
   addDislike,
   removeDislike,
+  getUsersPosts,
+  getProfileByUsername
 })(PostScreen);

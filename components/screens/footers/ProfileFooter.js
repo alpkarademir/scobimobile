@@ -26,20 +26,21 @@ import { connect } from "react-redux";
 import { logout } from "../../../redux/actions/auth";
 import PropTypes from "prop-types";
 
-export default function ProfileFooter() {
+export default function ProfileFooter({showScobs, setShowScobs}) {
   const routeToProfile = () => {
-    Actions.profileScreen();
+    setShowScobs(false);
   };
   const routeToScob = () => {
-    Actions.profileScobScreen();
+    // Actions.profileScobScreen();
+    setShowScobs(true);
   };
   const routeToBookmark = () => {
     Actions.profileBookmarkScreen();
   };
 
   return (
-    <View style={styles.footer} onPress={routeToProfile}>
-      <TouchableOpacity>
+    <View style={styles.footer}>
+      <TouchableOpacity onPress={routeToProfile}>
         <View style={styles.addPostContainer}>
           <FontAwesomeIcon color="#000000" icon={faGripLines} size={30} />
         </View>
@@ -58,6 +59,10 @@ export default function ProfileFooter() {
   );
 }
 
+ProfileFooter.propTypes = {
+  showScobs: PropTypes.bool.isRequired,
+  setShowScobs: PropTypes.func.isRequired,
+}
 const screenHeight = Math.round(Dimensions.get("window").height);
 
 const styles = StyleSheet.create({

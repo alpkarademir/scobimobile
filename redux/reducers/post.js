@@ -11,10 +11,13 @@ import {
   GET_BOOKMARKS,
   UPDATE_BOOKMARKS,
   CLEAR_POST,
+  GET_USER_POSTS,
+  CLEAR_USER_POSTS
 } from "../actions/types";
 
 const initialState = {
   posts: [],
+  user_posts: [],
   post: null,
   bookmarks: [],
   loading: true,
@@ -30,12 +33,23 @@ export default function (state = initialState, action) {
         ...state,
         post: null,
       };
+    case CLEAR_USER_POSTS:
+      return {
+        ...state,
+        user_posts: []
+      };
     case GET_POSTS:
       return {
         ...state,
         posts: payload,
         loading: false,
       };
+    case GET_USER_POSTS:
+      return {
+        ...state,
+        user_posts: payload,
+        loading: false,
+      }
     case GET_POST:
       return {
         ...state,

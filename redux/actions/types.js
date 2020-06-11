@@ -35,3 +35,5 @@ export const DELETE_SCOB = "DELETE_SCOB";
 export const GET_CURRENT_PROFILE = "GET_CURRENT_PROFILE";
 export const UPDATE_TWO_FA = "UPDATE_TWO_FA";
 export const CLEAR_POST = "CLEAR_POST";
+export const CLEAR_USER_POSTS = "CLEAR_USER_POSTS";
+export const GET_USER_POSTS = "GET_USER_POSTS";
