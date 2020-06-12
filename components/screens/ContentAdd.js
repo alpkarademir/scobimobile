@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,31 +9,40 @@ import {
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Actions } from "react-native-router-flux";
-import {
-  faUserCircle,
-  faThumbsUp,
-  faThumbsDown,
-  faPlusSquare,
-  faBell,
-  faBookmark,
-} from "@fortawesome/free-regular-svg-icons";
-import {
-  faShare,
-  faCheck,
-  faEdit,
-  faGripLines,
-  faArrowLeft,
-  faPencilAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 import { Input } from "react-native-elements";
 
-export default function ContentAddScreen() {
+import { connect } from "react-redux";
+import { addPost } from "../../redux/actions/post";
+import PropTypes from "prop-types";
+
+function ContentAddScreen({ addPost }) {
+  const [title, setTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [cover, setCover] = useState("");
+  const [text, setText] = useState("");
+
   const routeToProfile = () => {
     Actions.profileScreen();
   };
   const routeToHome = () => {
     Actions.homeScreen();
+  };
+
+  const onPressShare = async () => {
+    const formData = {
+      title: title.trim(),
+      subtitle: subtitle.trim(),
+      cover: cover.trim(),
+      text: text.trim(),
+    };
+
+    const post = await addPost(formData);
+
+    if (post) {
+      Actions.postScreen();
+    }
   };
 
   return (
@@ -57,16 +66,45 @@ export default function ContentAddScreen() {
           />
         </TouchableOpacity>
       </View>
-      <View>
+      <ScrollView style={{ paddingTop: 10 }}>
         <Input
-          placeholder="Title"
-          style={styles}
-          onChangeText={(value) => this.setState({ title: value })}
+          placeholder="Title (*)"
+          onChangeText={(value) => setTitle(value)}
         />
-      </View>
+        <Input
+          placeholder="Subtitle"
+          onChangeText={(value) => setSubtitle(value)}
+        />
+        <Input
+          placeholder="Enter cover image URL"
+          onChangeText={(value) => setCover(value)}
+        />
+        <Input
+          multiline
+          placeholder="Write post body... (*)"
+          onChangeText={(value) => setText(value)}
+        />
+        <TouchableOpacity
+          style={{
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            backgroundColor: "#333",
+            width: 200,
+            alignSelf: "center",
+            marginBottom: 20,
+          }}
+          onPress={onPressShare}
+        >
+          <Text style={{ color: "#fff", textAlign: "center" }}>Share</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 }
+
+ContentAddScreen.propTypes = {
+  addPost: PropTypes.func.isRequired,
+};
 
 const screenHeight = Math.round(Dimensions.get("window").height);
 
@@ -122,3 +160,5 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+export default connect(null, { addPost })(ContentAddScreen);

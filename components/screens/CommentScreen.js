@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import {
   Text,
   View,
@@ -6,8 +6,8 @@ import {
   TextComponent,
   Button,
   TextInput,
-  TouchableOpacity
-} from 'react-native';
+  TouchableOpacity,
+} from "react-native";
 
 import { Actions } from "react-native-router-flux";
 
@@ -18,11 +18,11 @@ import {
   faBookmark,
 } from "@fortawesome/free-regular-svg-icons";
 import { faShare, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faSellcast } from "@fortawesome/free-brands-svg-icons";  
+import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
-import ComTextInput from '../textinput3';
-import SendCom from '../sendCont';
-import AlrCom from '../alrCont';
+import ComTextInput from "../textinput3";
+import SendCom from "../sendCont";
+import AlrCom from "../alrCont";
 
 export default class CommentScreen extends Component {
   onPressLogo = () => {
@@ -30,33 +30,33 @@ export default class CommentScreen extends Component {
   };
   onPressBack = () => {
     Actions.postScreen();
-  }
+  };
   render() {
     return (
-      <View style= {{flex:1}}> 
-      <View style={styles.header}>
-        <TouchableOpacity onPress={this.onPressBack}>
-        <FontAwesomeIcon
-          style={styles.headerprofilePhotos}
-          color="#ffffff"
-          icon={faArrowLeft}
-          size={30}
-        />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Comments</Text>
-        <TouchableOpacity onPress={this.onPressLogo}>
-        <FontAwesomeIcon
-          style={styles.headerIcon}
-          color="#ffffff"
-          icon={faSellcast}
-          size={40}
-        />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.container}>
-        <AlrCom />
-        <SendCom />
-      </View>
+      <View style={{ flex: 1 }}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={this.onPressBack}>
+            <FontAwesomeIcon
+              style={styles.headerprofilePhotos}
+              color="#ffffff"
+              icon={faArrowLeft}
+              size={30}
+            />
+          </TouchableOpacity>
+          <Text style={styles.headerText}>Comments</Text>
+          <TouchableOpacity onPress={this.onPressLogo}>
+            <FontAwesomeIcon
+              style={styles.headerIcon}
+              color="#ffffff"
+              icon={faSellcast}
+              size={40}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.container}>
+          <AlrCom />
+          <SendCom />
+        </View>
       </View>
     );
   }
@@ -65,11 +65,11 @@ export default class CommentScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   textArea: {
-    justifyContent: 'center',
+    justifyContent: "center",
     flex: 0.1,
   },
   header: {

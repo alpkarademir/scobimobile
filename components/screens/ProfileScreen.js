@@ -27,16 +27,29 @@ import {
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 import ProfilePostScreen from "./ProfilePostScreen";
 import profileScobScreen from "./ProfileScobScreen";
-import profileBookmarkScreen from "./ProfileBookmarkScreen";
+import ProfileBookmarkScreen from "./ProfileBookmarkScreen";
 import ProfileFooter from "./footers/ProfileFooter";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getPosts, getPost } from "../../redux/actions/post";
-import { follow, unfollow } from '../../redux/actions/profile';
+import { follow, unfollow } from "../../redux/actions/profile";
+import { getUsersScobs } from "../../redux/actions/scob";
 import TimeAgo from "react-native-timeago";
+import ProfileScobScreen from "./ProfileScobScreen";
 
-function ProfileScreen({auth, posts, getPost, profile, follow, unfollow}) {
+function ProfileScreen({
+  auth,
+  posts,
+  getPost,
+  profile,
+  follow,
+  unfollow,
+  getUsersScobs,
+  scob,
+}) {
   const [showScobs, setShowScobs] = useState(false);
+  const [showBookmarks, setShowBookmarks] = useState(false);
+
   const routeToProfile = () => {
     Actions.profileScreen();
   };
@@ -52,33 +65,41 @@ function ProfileScreen({auth, posts, getPost, profile, follow, unfollow}) {
   const routeToPost = (post_id) => {
     getPost(post_id);
     Actions.postScreen();
-  }
+  };
 
   const toggleFollow = (username) => {
-    if (auth.user && profile && profile.followers.filter((follower) => follower.user.username === auth.user.username).length > 0) {
+    if (
+      auth.user &&
+      profile &&
+      profile.followers.filter(
+        (follower) => follower.user.username === auth.user.username
+      ).length > 0
+    ) {
       unfollow(username);
     } else {
       follow(username);
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         {auth.user ? (
-            <Image
-              style={styles.headerAvatar}
-              source={{ uri: "https:" + auth.user.avatar }}
-            />
-          ) : (
-            <FontAwesomeIcon
-              style={styles.headerprofilePhotos}
-              color="#ffffff"
-              icon={faUserCircle}
-              size={40}
-            />
-          )}
-        <Text style={styles.headerText}>{ profile && profile.user.username }</Text>
+          <Image
+            style={styles.headerAvatar}
+            source={{ uri: "https:" + auth.user.avatar }}
+          />
+        ) : (
+          <FontAwesomeIcon
+            style={styles.headerprofilePhotos}
+            color="#ffffff"
+            icon={faUserCircle}
+            size={40}
+          />
+        )}
+        <Text style={styles.headerText}>
+          {profile && profile.user.username}
+        </Text>
         <TouchableOpacity onPress={routeToHome}>
           <FontAwesomeIcon
             style={styles.headerIcon}
@@ -89,75 +110,115 @@ function ProfileScreen({auth, posts, getPost, profile, follow, unfollow}) {
         </TouchableOpacity>
       </View>
       <View style={styles.postScreen}>
-      <View style={styles.postCounterContainer}>
-        <View style={styles.counters}>
-          <Text style={styles.countersText}>Post</Text>
-          <Text style={styles.countersText}>{posts && posts.length}</Text>
-        </View>
-        <TouchableOpacity>
+        <View style={styles.postCounterContainer}>
           <View style={styles.counters}>
-            <Text style={styles.countersText}>Followers</Text>
-          <Text style={styles.countersText}>{profile && profile.followers.length}</Text>
+            <Text style={styles.countersText}>Post</Text>
+            <Text style={styles.countersText}>{posts && posts.length}</Text>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.counters}>
-            <Text style={styles.countersText}>Following</Text>
-          <Text style={styles.countersText}>{profile && profile.following.length}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      {auth.user && profile && auth.user.username != profile.user.username && 
-        <View style={styles.bracket}>
-          <TouchableOpacity style={styles.loginButton} onPress={() => toggleFollow(profile.user.username)}>
-            <Text style={styles.loginText}>{auth.user && profile && profile.followers.filter((follower) => follower.user.username === auth.user.username).length > 0 ? "Unfollow": "Follow"}</Text>
+          <TouchableOpacity>
+            <View style={styles.counters}>
+              <Text style={styles.countersText}>Followers</Text>
+              <Text style={styles.countersText}>
+                {profile && profile.followers.length}
+              </Text>
+            </View>
           </TouchableOpacity>
-        </View>}
+          <TouchableOpacity>
+            <View style={styles.counters}>
+              <Text style={styles.countersText}>Following</Text>
+              <Text style={styles.countersText}>
+                {profile && profile.following.length}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {auth.user && profile && auth.user.username != profile.user.username && (
+          <View style={styles.bracket}>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => toggleFollow(profile.user.username)}
+            >
+              <Text style={styles.loginText}>
+                {auth.user &&
+                profile &&
+                profile.followers.filter(
+                  (follower) => follower.user.username === auth.user.username
+                ).length > 0
+                  ? "Unfollow"
+                  : "Follow"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <ScrollView>
-      {!showScobs ? <View>
-      {posts.length === 0 ? (
-          <View style={{justifyContent:"center", alignItems:"center"}}>
-            <Text>There are no posts yet.</Text>
+        {!showBookmarks ? (
+          <View>
+            {!showScobs ? (
+              <View>
+                {posts.length === 0 ? (
+                  <View
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <Text>There are no posts yet.</Text>
+                  </View>
+                ) : (
+                  posts.map((post) => (
+                    <TouchableOpacity
+                      onPress={() => routeToPost(post._id)}
+                      key={post._id}
+                    >
+                      <View style={styles.post}>
+                        <View style={styles.postHeader}>
+                          <View style={styles.postHeaderLeft}>
+                            <Image
+                              style={styles.postAvatar}
+                              source={{ uri: "https:" + post.avatar }}
+                            />
+                            <Text style={styles.postUsername}>
+                              {post.username}
+                            </Text>
+                          </View>
+                          <View style={styles.postHeaderRight}>
+                            <View style={styles.postTime}>
+                              <TimeAgo time={post.date} />
+                            </View>
+                          </View>
+                        </View>
+                        {post.cover.length > 0 && (
+                          <Image
+                            style={styles.stretch}
+                            source={{ uri: post.cover }}
+                          />
+                        )}
+
+                        <View style={styles.postBody}>
+                          <Text style={styles.postTitle}>{post.title}</Text>
+                          <Text style={styles.postParagraph}>
+                            {post.subtitle}
+                          </Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  ))
+                )}
+              </View>
+            ) : (
+              <ProfileScobScreen profile={profile} />
+            )}
           </View>
         ) : (
-          posts.map((post) => (
-            <TouchableOpacity
-              onPress={() => routeToPost(post._id)}
-              key={post._id}
-            >
-              <View style={styles.post}>
-                <View style={styles.postHeader}>
-                  <View style={styles.postHeaderLeft}>
-                    <Image
-                      style={styles.postAvatar}
-                      source={{ uri: "https:" + post.avatar }}
-                    />
-                    <Text style={styles.postUsername}>{post.username}</Text>
-                  </View>
-                  <View style={styles.postHeaderRight}>
-                    <View style={styles.postTime}>
-                      <TimeAgo time={post.date} />
-                    </View>
-                  </View>
-                </View>
-                {post.cover.length > 0 && (
-                  <Image style={styles.stretch} source={{ uri: post.cover }} />
-                )}
-
-                <View style={styles.postBody}>
-                  <Text style={styles.postTitle}>{post.title}</Text>
-                  <Text style={styles.postParagraph}>{post.subtitle}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          ))
+          <View>
+            <ProfileBookmarkScreen />
+          </View>
         )}
-      </View>: <View>
-          <Text>Scobs</Text>
-        </View>}
       </ScrollView>
-      <ProfileFooter showScobs={showScobs} setShowScobs={setShowScobs}/>
+      <ProfileFooter
+        showScobs={showScobs}
+        setShowScobs={setShowScobs}
+        showBookmarks={showBookmarks}
+        setShowBookmarks={setShowBookmarks}
+      />
     </View>
   );
 }
@@ -168,6 +229,8 @@ ProfileScreen.propTypes = {
   getPost: PropTypes.func.isRequired,
   follow: PropTypes.func.isRequired,
   unfollow: PropTypes.func.isRequired,
+  getUsersScobs: PropTypes.func.isRequired,
+  scob: PropTypes.object.isRequired,
 };
 
 const screenHeight = Math.round(Dimensions.get("window").height);
@@ -374,7 +437,12 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   posts: state.post.user_posts,
   profile: state.profile.profile,
+  scob: state.scob,
 });
 
-
-export default connect(mapStateToProps, { getPost, follow, unfollow })(ProfileScreen);
+export default connect(mapStateToProps, {
+  getPost,
+  follow,
+  unfollow,
+  getUsersScobs,
+})(ProfileScreen);

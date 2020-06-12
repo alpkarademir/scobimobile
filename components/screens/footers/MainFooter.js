@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -14,12 +14,22 @@ import {
   faEye,
   faSearch,
   faSignOutAlt,
+  prefix,
+  faBell as faBellSolid,
 } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { logout } from "../../../redux/actions/auth";
+import { getNotifications } from "../../../redux/actions/notification";
 import PropTypes from "prop-types";
 
-function MainFooter({ logout }) {
+function MainFooter({ logout, getNotifications, hasUnreadNotifications }) {
+  useEffect(() => {
+    getNotifications();
+    setInterval(() => {
+      getNotifications();
+    }, 5000);
+  }, [getNotifications]);
+
   const routeToSearch = () => {
     Actions.searchScreen();
   };
@@ -44,7 +54,11 @@ function MainFooter({ logout }) {
       </TouchableOpacity>
       <TouchableOpacity onPress={routeToNofication}>
         <View style={styles.addScobContainer}>
-          <FontAwesomeIcon color="#000000" icon={faBell} size={30} />
+          {hasUnreadNotifications ? (
+            <FontAwesomeIcon color="#000000" icon={faBellSolid} size={30} />
+          ) : (
+            <FontAwesomeIcon color="#000000" icon={faBell} size={30} />
+          )}
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => logout()}>
@@ -58,6 +72,8 @@ function MainFooter({ logout }) {
 
 MainFooter.propTypes = {
   logout: PropTypes.func.isRequired,
+  getNotifications: PropTypes.func.isRequired,
+  hasUnreadNotifications: PropTypes.bool.isRequired,
 };
 
 const screenHeight = Math.round(Dimensions.get("window").height);
@@ -92,4 +108,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, { logout })(MainFooter);
+const mapStateToProps = (state) => ({
+  hasUnreadNotifications: state.notification.hasUnreadNotifications,
+});
+
+export default connect(mapStateToProps, { logout, getNotifications })(
+  MainFooter
+);

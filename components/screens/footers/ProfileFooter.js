@@ -26,16 +26,23 @@ import { connect } from "react-redux";
 import { logout } from "../../../redux/actions/auth";
 import PropTypes from "prop-types";
 
-export default function ProfileFooter({showScobs, setShowScobs}) {
+export default function ProfileFooter({
+  showScobs,
+  setShowScobs,
+  showBookmarks,
+  setShowBookmarks,
+}) {
   const routeToProfile = () => {
     setShowScobs(false);
+    setShowBookmarks(false);
   };
   const routeToScob = () => {
     // Actions.profileScobScreen();
     setShowScobs(true);
+    setShowBookmarks(false);
   };
   const routeToBookmark = () => {
-    Actions.profileBookmarkScreen();
+    setShowBookmarks(true);
   };
 
   return (
@@ -62,7 +69,7 @@ export default function ProfileFooter({showScobs, setShowScobs}) {
 ProfileFooter.propTypes = {
   showScobs: PropTypes.bool.isRequired,
   setShowScobs: PropTypes.func.isRequired,
-}
+};
 const screenHeight = Math.round(Dimensions.get("window").height);
 
 const styles = StyleSheet.create({

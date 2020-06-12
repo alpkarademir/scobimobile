@@ -11,7 +11,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Actions } from "react-native-router-flux";
 import {
-  faUserCircle,
   faThumbsUp,
   faThumbsDown,
   faBookmark,
@@ -24,7 +23,8 @@ import {
   faEye,
   faThumbsUp as faThumbsUpSolid,
   faThumbsDown as faThumbsDownSolid,
-  faArrowLeft
+  faArrowLeft,
+  faBookmark as faBookmarkSolid,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
@@ -34,9 +34,14 @@ import {
   removeLike,
   addDislike,
   removeDislike,
-  getUsersPosts
+  getUsersPosts,
+  getUsersBookmarks,
+  addBookmark,
+  removeBookmark,
+  deletePost,
 } from "../../redux/actions/post";
-import { getProfileByUsername } from '../../redux/actions/profile';
+import { getUsersScobs } from "../../redux/actions/scob";
+import { getProfileByUsername } from "../../redux/actions/profile";
 import PropTypes from "prop-types";
 
 import TimeAgo from "react-native-timeago";
@@ -50,14 +55,22 @@ function PostScreen({
   addDislike,
   removeDislike,
   getUsersPosts,
-  getProfileByUsername
+  getProfileByUsername,
+  getUsersScobs,
+  getUsersBookmarks,
+  addBookmark,
+  removeBookmark,
+  bookmarks,
+  deletePost,
 }) {
+  const goBack = () => {
+    Actions.pop();
+  };
+
   const routeToMain = () => {
     Actions.homeScreen();
   };
-  const routeToProfile = () => {
-    Actions.profileScreen();
-  };
+
   const routeToComment = () => {
     Actions.commentScreen();
   };
@@ -88,13 +101,28 @@ function PostScreen({
   const onPressPostHeaderLeft = () => {
     getProfileByUsername(post.username);
     getUsersPosts(post.username);
+    getUsersScobs(post.username);
+    getUsersBookmarks();
     Actions.profileScreen();
-  }
+  };
+
+  const onPressBookmark = () => {
+    addBookmark(post._id);
+  };
+
+  const onPressUnBookmark = () => {
+    removeBookmark(post._id);
+  };
+
+  const onPressDeletePost = async () => {
+    const deleted = await deletePost(post._id);
+    if (deleted) Actions.pop();
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={routeToMain}>
+        <TouchableOpacity onPress={goBack}>
           <FontAwesomeIcon
             style={styles.headerprofilePhotos}
             color="#ffffff"
@@ -114,7 +142,10 @@ function PostScreen({
       </View>
       {post && (
         <View style={styles.postHeader}>
-          <TouchableOpacity onPress={onPressPostHeaderLeft} style={styles.postHeaderLeft}>
+          <TouchableOpacity
+            onPress={onPressPostHeaderLeft}
+            style={styles.postHeaderLeft}
+          >
             <Image
               style={styles.postAvatar}
               source={{ uri: "https:" + post.avatar }}
@@ -125,7 +156,7 @@ function PostScreen({
             <View style={styles.postTime}>
               <TimeAgo time={post.date} />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onPressDeletePost}>
               <FontAwesomeIcon style={{ marginLeft: 5 }} icon={faTrashAlt} />
             </TouchableOpacity>
           </View>
@@ -136,6 +167,12 @@ function PostScreen({
         <View style={styles.post}>
           <View style={styles.postBody}>
             <ScrollView style={styles.markdownContainer}>
+              {post.cover.length > 0 && (
+                <Image
+                  style={{ width: "100%", height: 200, resizeMode: "stretch" }}
+                  source={{ uri: post.cover }}
+                />
+              )}
               <Text style={styles.postTitle}>{post.title}</Text>
               <Markdown style={styles.postParagraph}>{post.text}</Markdown>
               <View style={styles.postFooter}>
@@ -173,9 +210,21 @@ function PostScreen({
                   <Text style={{ marginLeft: 5 }}>{post.views.length}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
-                  <FontAwesomeIcon icon={faBookmark} />
-                </TouchableOpacity>
+                {post &&
+                bookmarks &&
+                bookmarks.filter((bookmark) => bookmark.post._id === post._id)
+                  .length > 0 ? (
+                  <TouchableOpacity onPress={onPressUnBookmark}>
+                    <FontAwesomeIcon icon={faBookmarkSolid} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity>
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      onPress={onPressBookmark}
+                    />
+                  </TouchableOpacity>
+                )}
 
                 <TouchableOpacity>
                   <FontAwesomeIcon icon={faShare} />
@@ -215,6 +264,12 @@ PostScreen.propTypes = {
   removeDislike: PropTypes.func.isRequired,
   getUsersPosts: PropTypes.func.isRequired,
   getProfileByUsername: PropTypes.func.isRequired,
+  getUsersScobs: PropTypes.func.isRequired,
+  getUsersBookmarks: PropTypes.func.isRequired,
+  addBookmark: PropTypes.func.isRequired,
+  removeBookmark: PropTypes.func.isRequired,
+  bookmarks: PropTypes.array.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const screenHeight = Math.round(Dimensions.get("window").height);
@@ -357,6 +412,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   post: state.post.post,
   user: state.auth.user,
+  bookmarks: state.post.bookmarks,
 });
 
 export default connect(mapStateToProps, {
@@ -365,5 +421,10 @@ export default connect(mapStateToProps, {
   addDislike,
   removeDislike,
   getUsersPosts,
-  getProfileByUsername
+  getProfileByUsername,
+  getUsersScobs,
+  getUsersBookmarks,
+  addBookmark,
+  removeBookmark,
+  deletePost,
 })(PostScreen);

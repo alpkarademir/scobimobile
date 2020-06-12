@@ -1,20 +1,22 @@
 import * as React from "react";
 import {
   View,
-  TextComponent,
   Text,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import { Card } from "react-native-elements";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faThumbsUp, faThumbsDown } from "@fortawesome/free-regular-svg-icons";
-import { faShare, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 
 import { Actions } from "react-native-router-flux";
+import { connect } from "react-redux";
+import { readNotifications } from "../../redux/actions/notification";
+import PropTypes from "prop-types";
 
 const users = [
   {
@@ -22,12 +24,22 @@ const users = [
   },
 ];
 
-export default class Notification extends React.Component {
+class Notification extends React.Component {
+  static propTypes = {
+    readNotifications: PropTypes.func.isRequired,
+    notifications: PropTypes.array.isRequired,
+  };
   onPressBack = () => {
-    Actions.homeScreen();
+    Actions.pop();
   };
 
+  componentDidMount() {
+    this.props.readNotifications();
+  }
+
   render() {
+    const { notifications } = this.props;
+
     return (
       <View>
         <View style={styles.header}>
@@ -51,16 +63,28 @@ export default class Notification extends React.Component {
         </View>
 
         <Card title="Latest Notifications">
-          {users.map((u, i) => {
-            return (
-              <ListItem
-                key={i}
-                roundAvatar
-                title={u.name}
-                avatar={{ uri: u.avatar }}
-              />
-            );
-          })}
+          <ScrollView>
+            {notifications.map((notification) => {
+              return (
+                // <ListItem
+                //   key={notification._id}
+                //   roundAvatar
+                //   title={notification.name + " " + notification.msg}
+                //   avatar={{ uri: "https:" + notification.avatar }}
+                // />
+                <View
+                  style={{ flexDirection: "row", alignItems: "center" }}
+                  key={notification._id}
+                >
+                  <Image
+                    style={styles.postAvatar}
+                    source={{ uri: "https:" + notification.avatar }}
+                  />
+                  <Text>{notification.name + " " + notification.msg}</Text>
+                </View>
+              );
+            })}
+          </ScrollView>
         </Card>
       </View>
     );
@@ -103,4 +127,16 @@ const styles = StyleSheet.create({
   headerIcon: {
     marginRight: 10,
   },
+  postAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    resizeMode: "stretch",
+    marginRight: 10,
+  },
 });
+
+const mapStateToProps = (state) => ({
+  notifications: state.notification.notifications,
+});
+export default connect(mapStateToProps, { readNotifications })(Notification);

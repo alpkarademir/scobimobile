@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -17,131 +17,93 @@ import {
   faShare,
   faEllipsisH,
   faPlus,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
 import ScobTextInput from "../scobTextInput";
 
-export default function ProfileScobScreen() {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import TimeAgo from "react-native-timeago";
+import { addScob } from "../../redux/actions/scob";
+
+function ProfileScobScreen({ scob, addScob, profile, auth }) {
+  const [text, setText] = useState("");
+
+  const onPressAddScob = () => {
+    if (text.trim() !== "") addScob(text);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.post}>
-        <View style={styles.postHeader}>
-          <View style={styles.postHeaderLeft}>
-            <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
-            <Text style={styles.postUsername}>Username</Text>
+      {auth.user && profile && auth.user.username === profile.user.username && (
+        <View style={styles.post}>
+          <View style={styles.postHeader}>
+            <View style={styles.postHeaderLeft}>
+              <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
+              <Text style={styles.postUsername}>Username</Text>
+            </View>
           </View>
+          <View style={styles.postBody}>
+            <ScobTextInput text={text} setText={setText}></ScobTextInput>
+          </View>
+          <View
+            style={{ alignContent: "center", marginTop: 15, marginLeft: 140 }}
+          >
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={onPressAddScob}
+            >
+              <FontAwesomeIcon icon={faPlusSquare} size={20} color="#ffffff" />
+              <Text style={styles.loginText}>Scob</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.bracket}></View>
         </View>
-        <View style={styles.postBody}>
-          <ScobTextInput></ScobTextInput>
-        </View>
-        <View
-          style={{ alignContent: "center", marginTop: 15, marginLeft: 140 }}
-        >
-          <TouchableOpacity style={styles.loginButton}>
-            <FontAwesomeIcon icon={faPlusSquare} size={20} color="#ffffff" />
-            <Text style={styles.loginText}>Scob</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.bracket}></View>
+      )}
       <ScrollView>
-        <View style={styles.post}>
-          <View style={styles.postHeader}>
-            <View style={styles.postHeaderLeft}>
-              <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
-              <Text style={styles.postUsername}>Username</Text>
+        {!scob.loading && scob.scobs.length > 0 ? (
+          scob.scobs.map((scob) => (
+            <View style={styles.post} key={scob._id}>
+              <View style={styles.postHeader}>
+                <View style={styles.postHeaderLeft}>
+                  <FontAwesomeIcon
+                    color="#000000"
+                    icon={faUserCircle}
+                    size={40}
+                  />
+                  <Text style={styles.postUsername}>{scob.username}</Text>
+                </View>
+                <View style={styles.postHeaderRight}>
+                  <TimeAgo style={styles.postTime} time={scob.date} />
+                </View>
+              </View>
+              <View style={styles.postBody}>
+                <Text style={styles.postParagraph}>{scob.text}</Text>
+              </View>
+              <View style={styles.postFooter}>
+                <TouchableOpacity>
+                  <FontAwesomeIcon icon={faShare} />
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.postHeaderRight}>
-              <Text style={styles.postTime}>15m</Text>
-              <TouchableOpacity>
-                <FontAwesomeIcon
-                  style={{ marginLeft: 10 }}
-                  color="#0000000"
-                  icon={faEllipsisH}
-                />
-              </TouchableOpacity>
-            </View>
+          ))
+        ) : (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <Text>There are no scobs yet.</Text>
           </View>
-          <View style={styles.postBody}>
-            <Text style={styles.postTitle}>Scob Title</Text>
-            <Text style={styles.postParagraph}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </Text>
-          </View>
-          <View style={styles.postFooter}>
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faShare} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.post}>
-          <View style={styles.postHeader}>
-            <View style={styles.postHeaderLeft}>
-              <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
-              <Text style={styles.postUsername}>Username</Text>
-            </View>
-            <View style={styles.postHeaderRight}>
-              <Text style={styles.postTime}>15m</Text>
-              <TouchableOpacity>
-                <FontAwesomeIcon
-                  style={{ marginLeft: 10 }}
-                  color="#0000000"
-                  icon={faEllipsisH}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.postBody}>
-            <Text style={styles.postTitle}>Scob Title</Text>
-            <Text style={styles.postParagraph}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </Text>
-          </View>
-          <View style={styles.postFooter}>
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faShare} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.post}>
-          <View style={styles.postHeader}>
-            <View style={styles.postHeaderLeft}>
-              <FontAwesomeIcon color="#000000" icon={faUserCircle} size={40} />
-              <Text style={styles.postUsername}>Username</Text>
-            </View>
-            <View style={styles.postHeaderRight}>
-              <Text style={styles.postTime}>15m</Text>
-              <TouchableOpacity>
-                <FontAwesomeIcon
-                  style={{ marginLeft: 10 }}
-                  color="#0000000"
-                  icon={faEllipsisH}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.postBody}>
-            <Text style={styles.postTitle}>Scob Title</Text>
-            <Text style={styles.postParagraph}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </Text>
-          </View>
-          <View style={styles.postFooter}>
-            <TouchableOpacity>
-              <FontAwesomeIcon icon={faShare} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        )}
       </ScrollView>
     </View>
   );
 }
+
+ProfileScobScreen.propTypes = {
+  scob: PropTypes.object.isRequired,
+  addScob: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+};
 
 const screenHeight = Math.round(Dimensions.get("window").height);
 
@@ -150,7 +112,6 @@ const styles = StyleSheet.create({
     height: screenHeight,
   },
   post: {
-    height: 210,
     backgroundColor: "#E2E8F0",
     borderRadius: 10,
     flexDirection: "column",
@@ -160,6 +121,8 @@ const styles = StyleSheet.create({
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.9,
+    marginBottom: 10,
+    paddingBottom: 10,
   },
   postHeader: {
     marginTop: 10,
@@ -180,7 +143,7 @@ const styles = StyleSheet.create({
   postHeaderRight: {
     flexDirection: "row",
     alignItems: "center",
-    marginRight: 10,
+    marginRight: 5,
   },
   postTime: {
     fontWeight: "400",
@@ -241,3 +204,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
   },
 });
+
+const mapStateToProps = (state) => ({
+  scob: state.scob,
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { addScob })(ProfileScobScreen);

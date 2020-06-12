@@ -12,7 +12,7 @@ import {
   UPDATE_BOOKMARKS,
   CLEAR_POST,
   GET_USER_POSTS,
-  CLEAR_USER_POSTS
+  CLEAR_USER_POSTS,
 } from "../actions/types";
 
 const initialState = {
@@ -36,7 +36,7 @@ export default function (state = initialState, action) {
     case CLEAR_USER_POSTS:
       return {
         ...state,
-        user_posts: []
+        user_posts: [],
       };
     case GET_POSTS:
       return {
@@ -49,7 +49,7 @@ export default function (state = initialState, action) {
         ...state,
         user_posts: payload,
         loading: false,
-      }
+      };
     case GET_POST:
       return {
         ...state,
@@ -65,13 +65,15 @@ export default function (state = initialState, action) {
     case ADD_POST:
       return {
         ...state,
-        posts: [payload, ...state.posts],
+        post: payload,
         loading: false,
       };
     case DELETE_POST:
       return {
         ...state,
         posts: state.posts.filter((post) => post._id !== payload),
+        user_posts: state.posts.filter((post) => post._id !== payload),
+        post: null,
         loading: false,
       };
     case POST_ERROR:

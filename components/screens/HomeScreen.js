@@ -10,31 +10,36 @@ import {
 } from "react-native";
 import { Actions } from "react-native-router-flux";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {
-  faUserCircle,
-  faThumbsUp,
-  faThumbsDown,
-  faBookmark,
-} from "@fortawesome/free-regular-svg-icons";
-import {
-  faShare,
-  faFileSignature,
-  faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
+import { faFileSignature } from "@fortawesome/free-solid-svg-icons";
+import TimeAgo from "react-native-timeago";
+import PropTypes from "prop-types";
+
 import MainFooter from "./footers/MainFooter";
 
 import { connect } from "react-redux";
-import { getPosts, getPost, getUsersPosts } from "../../redux/actions/post";
-import { getProfileByUsername } from '../../redux/actions/profile';
-import PropTypes from "prop-types";
+import {
+  getPosts,
+  getPost,
+  getUsersPosts,
+  getUsersBookmarks,
+} from "../../redux/actions/post";
+import { getProfileByUsername } from "../../redux/actions/profile";
+import { getUsersScobs } from "../../redux/actions/scob";
 
-import TimeAgo from "react-native-timeago";
-
-import { Avatar } from "react-native-elements";
-
-function HomeScreen({ auth, getPosts, posts, getPost, getProfileByUsername, getUsersPosts }) {
+function HomeScreen({
+  auth,
+  getPosts,
+  posts,
+  getPost,
+  getProfileByUsername,
+  getUsersPosts,
+  getUsersScobs,
+  getUsersBookmarks,
+}) {
   useEffect(() => {
     getPosts();
+    getUsersBookmarks();
   }, [getPosts]);
   const routeToPost = (post_id) => {
     // Actions.postScreen();
@@ -45,6 +50,8 @@ function HomeScreen({ auth, getPosts, posts, getPost, getProfileByUsername, getU
     if (auth.user) {
       getProfileByUsername(auth.user.username);
       getUsersPosts(auth.user.username);
+      getUsersScobs(auth.user.username);
+      getUsersBookmarks();
       Actions.profileScreen();
     }
   };
@@ -135,6 +142,8 @@ HomeScreen.propTypes = {
   getPost: PropTypes.func.isRequired,
   getProfileByUsername: PropTypes.func.isRequired,
   getUsersPosts: PropTypes.func.isRequired,
+  getUsersScobs: PropTypes.func.isRequired,
+  getUsersBookmarks: PropTypes.func.isRequired,
 };
 
 const screenHeight = Math.round(Dimensions.get("window").height);
@@ -250,4 +259,11 @@ const mapStateToProps = (state) => ({
   posts: state.post.posts,
 });
 
-export default connect(mapStateToProps, { getPosts, getPost, getProfileByUsername, getUsersPosts})(HomeScreen);
+export default connect(mapStateToProps, {
+  getPosts,
+  getPost,
+  getProfileByUsername,
+  getUsersPosts,
+  getUsersScobs,
+  getUsersBookmarks,
+})(HomeScreen);

@@ -29,7 +29,7 @@ const _retrieveData = async () => {
 
 const initialState = {
   token: _retrieveData(),
-  isAuthenticated: null,
+  isAuthenticated: false,
   loading: true,
   user: null,
   two_fa: null,

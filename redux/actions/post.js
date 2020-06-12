@@ -13,7 +13,7 @@ import {
   UPDATE_BOOKMARKS,
   CLEAR_POST,
   CLEAR_USER_POSTS,
-  GET_USER_POSTS
+  GET_USER_POSTS,
 } from "./types";
 import { endPoint } from "../api";
 
@@ -34,7 +34,7 @@ export const getPosts = () => async (dispatch) => {
   }
 };
 
-export const getUsersPosts = username => async dispatch => {
+export const getUsersPosts = (username) => async (dispatch) => {
   dispatch(clearUserPosts());
 
   try {
@@ -42,12 +42,12 @@ export const getUsersPosts = username => async dispatch => {
 
     dispatch({
       type: GET_USER_POSTS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
 };
@@ -147,5 +147,94 @@ export const removeDislike = (id) => async (dispatch) => {
       type: POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+  }
+};
+
+// Add Bookmark
+export const addBookmark = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.put(`${endPoint}/api/posts/bookmark/${id}`);
+
+    dispatch({
+      type: UPDATE_BOOKMARKS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeBookmark = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.put(`${endPoint}/api/posts/unbookmark/${id}`);
+
+    dispatch({
+      type: UPDATE_BOOKMARKS,
+      payload: data,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUsersBookmarks = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${endPoint}/api/posts/user/get/bookmarks`);
+
+    dispatch({
+      type: GET_BOOKMARKS,
+      payload: res.data,
+    });
+  } catch (err) {
+    // dispatch({
+    //   type: BOOKMARKS_ERROR,
+    //   payload: { msg: err.response.statusText, status: err.response.status }
+    // });
+  }
+};
+
+// Add post
+export const addPost = (formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const res = await axios.post(endPoint + "/api/posts", formData, config);
+
+    dispatch({
+      type: ADD_POST,
+      payload: res.data,
+    });
+
+    return res.data;
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return false;
+  }
+};
+
+// Delete post
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`${endPoint}/api/posts/${id}`);
+
+    dispatch({
+      type: DELETE_POST,
+      payload: id,
+    });
+
+    return true;
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    return false;
   }
 };
