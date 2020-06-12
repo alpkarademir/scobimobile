@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Share
 } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Actions } from "react-native-router-flux";
@@ -46,6 +47,7 @@ import PropTypes from "prop-types";
 
 import TimeAgo from "react-native-timeago";
 import Markdown from "react-native-markdown-renderer";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 function PostScreen({
   post,
@@ -119,6 +121,25 @@ function PostScreen({
     if (deleted) Actions.pop();
   };
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'Have you seen this post on Scobi? http://scobi.social/posts/'+ post._id,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -162,7 +183,7 @@ function PostScreen({
           </View>
         </View>
       )}
-
+      <ScrollView>
       {post ? (
         <View style={styles.post}>
           <View style={styles.postBody}>
@@ -226,7 +247,7 @@ function PostScreen({
                   </TouchableOpacity>
                 )}
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onShare}>
                   <FontAwesomeIcon icon={faShare} />
                 </TouchableOpacity>
               </View>
@@ -251,6 +272,7 @@ function PostScreen({
           <Text>Loading...</Text>
         </View>
       )}
+      </ScrollView>
     </View>
   );
 }

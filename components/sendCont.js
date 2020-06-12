@@ -15,13 +15,13 @@ export default function SendCont() {
 
 const stylecomment = StyleSheet.create({
   container: {
-    flex: 0.23,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
   textArea: {
     marginBottom: 0,
     justifyContent: 'center',
-    flex: 0.5,
+    marginLeft: 10,
   },
 });

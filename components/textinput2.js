@@ -13,6 +13,7 @@ export default function UselessTextInput() {
         borderColor: 'green',
         borderWidth: 1,
         borderRadius: 10,
+        marginLeft: 10,
       }}
       onChangeText={text => onChangeText(text)}
       autoCorrect={false}

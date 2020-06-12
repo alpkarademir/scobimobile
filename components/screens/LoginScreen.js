@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#E2E8F0",
-    height: screenHeight,
+    height: '100%',
   },
 
   input: {

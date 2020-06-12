@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity, Button, TextInput } from "react-native";
 import { Actions } from "react-native-router-flux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -11,18 +11,49 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { faSellcast } from "@fortawesome/free-brands-svg-icons";
-
-import TextInput from "../textinput";
 import TextInput2 from "../textinput2";
 
+import axios from 'axios';
+import {endPoint} from '../../redux/api'
+
 export default class Contact extends Component {
+  state = {
+    name: '',
+    surname: '',
+    email: '',
+    phone: '',
+    message: ''
+  }
+
   onPressLogo = () => {
     Actions.homeScreen();
   };
   onPressBack = () => {
     Actions.postScreen();
   };
+
+  onPressSend = async () => {
+    const { name, surname, email, phone, message } = this.state;
+    console.warn({ name, surname, email, phone, message });
+
+    const config = {
+      headers : {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    };
+
+    try {
+      await axios.post(endPoint + '/api/contact', { name, surname, email, phone, message }, config);
+      console.warn('mail gitti');
+      Actions.pop();
+    } catch(error) {
+      console.warn(error);
+    }
+  }
+
   render() {
+    const { name, surname, email, phone, message } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.header}>
@@ -47,14 +78,62 @@ export default class Contact extends Component {
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <Text style={styles.textArea1}>* These fields are required.</Text>
           <Text style={styles.textArea}> *Name </Text>
-          <TextInput />
+          <TextInput
+            style={{
+              marginBottom: 25,
+              height: 40,
+              width: 200,
+              borderColor: 'green',
+              borderWidth: 1,
+              borderRadius: 30,
+              marginLeft: 10,
+            }}
+            onChangeText={text => this.setState({ name: text })}
+            autoCorrect={false}
+            value={name} />
           <Text style={styles.textArea}> *Surname </Text>
-          <TextInput />
+          <TextInput
+            style={{
+              marginBottom: 25,
+              height: 40,
+              width: 200,
+              borderColor: 'green',
+              borderWidth: 1,
+              borderRadius: 30,
+              marginLeft: 10,
+            }}
+            onChangeText={text => this.setState({ surname: text })}
+            autoCorrect={false}
+            value={surname} />
           <Text style={styles.textArea}>*Email</Text>
-          <TextInput />
+          <TextInput
+            style={{
+              marginBottom: 25,
+              height: 40,
+              width: 200,
+              borderColor: 'green',
+              borderWidth: 1,
+              borderRadius: 30,
+              marginLeft: 10,
+            }}
+            onChangeText={text => this.setState({ email: text })}
+            autoCorrect={false}
+            value={email} />
           <Text style={styles.textArea}>*Message</Text>
-          <TextInput2 />
-          <TouchableOpacity style={styles.loginButton}>
+          <TextInput
+            style={{
+              marginBottom: 25,
+              height: 40,
+              width: 200,
+              borderColor: 'green',
+              borderWidth: 1,
+              borderRadius: 30,
+              marginLeft: 10,
+            }}
+            onChangeText={text => this.setState({ message: text })}
+            autoCorrect={false}
+            value={message} />
+          <TouchableOpacity style={styles.loginButton} onPress={() => this.onPressSend()}>
             <Text style={styles.loginText}>Send</Text>
           </TouchableOpacity>
         </View>
