@@ -1,17 +1,46 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet, Button} from 'react-native';
+import React, {Component, useState} from 'react';
+import {Text, View, StyleSheet, Button, TextInput} from 'react-native';
 
-import Textin3 from './textinput3';
+import { connect } from 'react-redux';
+import { addComment } from '../redux/actions/post';
+import PropTypes from 'prop-types'
 
-export default function SendCont() {
+
+function SendCont({ post, addComment }) {
+  const [text, setText] = useState('');
   return (
     <View style={stylecomment.container}>
       <Text style={stylecomment.textArea}>Send Comment</Text>
-      <Textin3 />
-      <Button title="send" color="green" />
+      <TextInput
+      style={{
+        marginTop: 5,
+        marginBottom: 10,
+        height: 40,
+        width: 320,
+        borderColor: 'green',
+        borderWidth: 1,
+        borderRadius: 30,
+        marginLeft: 10,
+      }}
+      onChangeText={text => setText(text)}
+      autoCorrect={false}
+      value={text}
+    />
+      <Button title="send" color="green" onPress={() => addComment(post._id, {text})} />
     </View>
   );
 }
+
+SendCont.propTypes = {
+  post: PropTypes.object.isRequired,
+  addComment: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  post: state.post.post,
+})
+
+export default connect(mapStateToProps, { addComment })(SendCont)
 
 const stylecomment = StyleSheet.create({
   container: {

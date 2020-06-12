@@ -61,9 +61,9 @@ class Notification extends React.Component {
             />
           </TouchableOpacity>
         </View>
-
+        <ScrollView>
         <Card title="Latest Notifications">
-          <ScrollView>
+          
             {notifications.map((notification) => {
               return (
                 // <ListItem
@@ -84,8 +84,9 @@ class Notification extends React.Component {
                 </View>
               );
             })}
-          </ScrollView>
+          
         </Card>
+        </ScrollView>
       </View>
     );
   }

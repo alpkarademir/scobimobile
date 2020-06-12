@@ -16,13 +16,16 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Actions } from "react-native-router-flux";
 import { connect } from "react-redux";
-import { login } from "../../redux/actions/auth";
+import { login, getToken } from "../../redux/actions/auth";
 import PropTypes from "prop-types";
 
 class LoginScreen extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
     login: PropTypes.func.isRequired,
+    two_fa: PropTypes.bool.isRequired,
+    auth: PropTypes.object.isRequired,
+    getToken: PropTypes.func.isRequired,
   };
 
   state = {
@@ -41,8 +44,12 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, two_fa, auth } = this.props;
 
+    if (two_fa) {
+      // getToken(auth.user.id);
+      Actions.twofaScreen()
+    };
     if (isAuthenticated) {
       Actions.homeScreen();
     }
@@ -220,6 +227,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  two_fa: state.auth.two_fa,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { login })(LoginScreen);
+export default connect(mapStateToProps, { login, getToken })(LoginScreen);

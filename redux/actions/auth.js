@@ -132,3 +132,64 @@ export const logout = () => (dispatch) => {
   // dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };
+
+export const getToken = user_id => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    let res = await axios.get(endPoint + '/api/auth/totp-secret');
+    const secret = res.data.secret;
+
+    const body = JSON.stringify({ secret, user_id });
+    res = await axios.post(endPoint + '/api/auth/totp-generate', body, config);
+
+    dispatch({
+      type: GET_TOKEN,
+      payload: { secret }
+    });
+  } catch (err) {
+    // const errors = err.response.data.errors;
+    // if (errors) {
+    //   errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    // }
+    console.log(err);
+    dispatch({
+      type: LOGIN_FAIL
+    });
+  }
+};
+
+// Login User 2FA
+export const login_2fa = (secret, token, user_id) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({ secret, token, user_id });
+
+  try {
+    const res = await axios.post(endPoint + '/api/auth/totp-validate', body, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+    console.log(err);
+    dispatch({
+      type: LOGIN_FAIL
+    });
+  }
+};

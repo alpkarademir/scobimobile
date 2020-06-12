@@ -23,14 +23,30 @@ import ComTextInput from "../textinput3";
 import SendCom from "../sendCont";
 import AlrCom from "../alrCont";
 
-export default class CommentScreen extends Component {
+import { connect } from 'react-redux';
+import { addComment, deleteComment } from '../../redux/actions/post';
+import PropTypes from 'prop-types'
+import TimeAgo from "react-native-timeago";
+
+class CommentScreen extends Component {
+  static propTypes = {
+    post: PropTypes.object.isRequired,
+    addComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
+  }
+
   onPressLogo = () => {
     Actions.homeScreen();
   };
   onPressBack = () => {
     Actions.postScreen();
   };
+
+  onPressDeleteComment =  (commentId) => {
+    this.props.deleteComment(this.props.post._id, commentId);
+  }
   render() {
+    const { post } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.header}>
@@ -54,26 +70,24 @@ export default class CommentScreen extends Component {
         </View>
         <View style={styles.container}>
           <ScrollView>
-        <View style={styles.post}>
+          { post && post.comments.map((comment) => (<View style={styles.post}>
           <View style={styles.postHeader}>
             <View style={styles.postT}>
-              <Text style={styles.postTitleText}>Username</Text>
+              <Text style={styles.postTitleText}>{comment.username}</Text>
             </View>
             <View style={styles.postHeaderRight}>
-              <Text style={styles.postTime}>15m</Text>
-              <TouchableOpacity>
+              <TimeAgo style={styles.postTime} time={comment.date} />
+              <TouchableOpacity onPress={() => this.onPressDeleteComment(comment._id)}>
               <FontAwesomeIcon style={{ marginLeft: 5 }} icon={faTrashAlt} />
             </TouchableOpacity>
             </View>
           </View>
           <View style={styles.postBody}>
             <Text style={styles.postParagraph}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s.
+              {comment.text}
             </Text>
           </View>
-        </View>
+        </View>))}
     </ScrollView>
           <SendCom style={{flex:0.35}} />
         </View>
@@ -83,6 +97,12 @@ export default class CommentScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  post: state.post.post,
+})
+
+export default connect(mapStateToProps, { addComment, deleteComment })(CommentScreen);
 
 const styles = StyleSheet.create({
   container: {
